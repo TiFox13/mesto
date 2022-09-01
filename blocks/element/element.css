@@ -1,0 +1,36 @@
+.element {
+    max-width: 282px;
+    background-color: #FFF;
+    border-radius: 10px;
+}
+
+.element__photo {
+    max-width: 100%;
+    border-radius: 10px 10px 0 0;
+}
+
+.element__info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 246px;
+    margin: 0 auto;
+}
+
+.element__text {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    margin: 0;
+    font-weight: 900;
+    font-size: 24px;
+    line-height: 1.2;
+    padding: 25px 0 31px;
+    max-width: 190px;
+}
+
+.like {
+    background-image: url(../../images/like.svg);
+    width: 22px;
+    height: 19px;
+}

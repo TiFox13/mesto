@@ -1,0 +1,116 @@
+.profile {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 36.25px 0 47.25px;
+}
+
+@media all and (max-width: 320px) {
+    .profile {
+        display: block;
+        margin: 0 auto;
+        padding: 38.25px 0 36px;
+    }
+}
+
+.profile__avatar {
+    max-width: 120px;
+    padding: 3.75px 26.25px 3.75px 22.5px;
+    /*max-width: 168.75px;*/
+    border-radius: 50%;
+}
+
+@media all and (max-width: 320px) {
+    .profile__avatar {
+        margin: 0 auto;
+    }
+}
+
+
+.profile__info {
+    display: flex;
+    color: #FFF;
+}
+@media all and (max-width: 320px) {
+    .profile__info {
+        display: block;
+        
+    }
+}
+
+.profile__name {
+    margin: 0;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 42px;
+    line-height: 1.14;
+}
+
+@media all and (max-width: 320px) {
+    .profile__name {
+        font-weight: 500;
+    font-size: 27px;
+    line-height: 33px;
+    text-align: center;  
+    padding-top: 22.25px;
+    }
+}
+
+.profile__about {
+    margin: 16px 0 0;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 1.2;
+}
+
+
+@media all and (max-width: 320px) {
+    .profile__about {
+
+font-size: 14px;
+line-height: 17px;
+text-align: center;  
+margin: 14px 0 36px ;
+    }
+}
+
+
+.add-button {
+    padding: 0;
+    box-sizing: border-box;
+    width: 150px;
+    height: 50px;
+    background-color: #000;
+    border: 2px solid #FFF;
+    color: #FFF;
+    border-radius: 2px;  
+    background-image: url(../../images/+.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+
+@media all and (max-width: 320px) {
+    .add-button {
+        width: 282px;
+        
+    }
+}
+
+.edit-button {
+ 
+    background-image: url(../../images/Edit-Button.svg);
+    width: 24px;
+    height: 24px;
+    margin: auto 0;
+}
+.profile__text {
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    grid-template-rows: repeat(2, auto);
+    align-content: center;
+    column-gap: 18px;
+}
