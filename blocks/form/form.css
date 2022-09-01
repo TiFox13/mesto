@@ -11,6 +11,7 @@ top: 195px;
     height: 330px;
     background-color: #FFF;
     border-radius: 10px;
+
 }
 
 .form__item {
@@ -49,4 +50,31 @@ line-height: 29px;
 .form-button:hover {
     cursor: pointer;
     opacity: 0.8;
+}
+
+.close-button {
+    width: 32px;
+    height: 32px;
+    background-image: url(../../images/Close-Icon.svg);
+    background-position: center;
+    margin-left: 100%;
+
+    background-color: rgba(0, 0, 0, 0);
+    border: 0;
+}
+.close-button:hover {
+    cursor: pointer;
+    opacity: 0.6;
+}
+
+
+.overlay {
+    position: absolute;
+    left: 0;
+    right: 0;
+    max-width: 1280px;
+    min-height: 100%;
+    background-color: #000;
+    opacity: 0.5;
+    
 }
