@@ -46,3 +46,7 @@ line-height: 29px;
     border-radius: 2px;
     margin: 0 38px;
 }
+.form-button:hover {
+    cursor: pointer;
+    opacity: 0.8;
+}
