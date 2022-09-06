@@ -1,11 +1,17 @@
 .form {
- 
     margin: calc((100vh - 330px)/2) auto;
     width: 430px;
     height: 330px;
 }
+@media all and (max-width: 550px) {
+    .form {
+        width: 288px;
+        height: 322px;
+    }
+}
 
 .form__input-container {
+    border: 0;
     padding: 0;
     margin: 0;
     width: 430px;
@@ -14,19 +20,29 @@
     border-radius: 10px;
 
 }
+@media all and (max-width: 550px) {
+    .form__input-container {
+        width: 282px;
+        height: 322px;
+    }
+}
 
 .form__item {
     width: 358px;
     height: 27px;
-    margin: 0 38px 30px;
+    margin: 0 8.3% 30px;
     border: 0;
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
     font-style: normal;
 font-weight: 400;
 font-size: 14px;
 line-height: 17px;
+}
 
-
+@media all and (max-width: 550px) {
+    .form__item {
+        width: 238px;
+    }
 }
 
 .form__heading {
@@ -37,8 +53,19 @@ font-size: 24px;
 line-height: 29px;
     padding: 34px 0 54px;
 }
+@media all and (max-width: 550px) {
+    .form__heading {
+        margin: 0 auto;
+        max-width: 238px;
+        font-size: 18px;
+line-height: 22px;
+padding: 25px 0 75px;
+    }
+    
+}
 
 .save-button {
+    box-sizing: content-box;
     margin: 18px 0 37px;
     width: 358px;
     height: 50px;
@@ -46,18 +73,27 @@ line-height: 29px;
     background-color: #000;
     border: 0;
     border-radius: 2px;
-    margin: 0 38px;
+    margin: 0 8.23%;
 }
 .save-button:hover {
     cursor: pointer;
     opacity: 0.8;
 }
+@media all and (max-width: 550px) {
+    .save-button {
+        width: 238px;
+        margin-top: 15px;
+    }
+    
+}
+
 
 .close-button {
     width: 32px;
     height: 32px;
     background-image: url(../../images/Close-Icon.svg);
     background-position: center;
+    background-size: 100%;
     margin-left: 100%;
 
     background-color: rgba(0, 0, 0, 0);
@@ -68,7 +104,14 @@ line-height: 29px;
     opacity: 0.6;
 }
 
-
+@media all and (max-width: 550px) {
+    .close-button {
+        margin-left: 90%;
+        margin-bottom: 16px;
+        width: 20px;
+    height: 20px; 
+    }
+}
 .popup {
     display: none;
   margin: 0 auto;
@@ -79,7 +122,6 @@ line-height: 29px;
     max-width: 1280px;
     min-height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
-
 }
 
 .popup_opened {

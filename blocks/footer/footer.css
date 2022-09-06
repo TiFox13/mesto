@@ -3,7 +3,11 @@
     margin: 0 auto;
     padding: 67px 0 60px;
 }
-
+@media all and (max-width:950px) {
+    .footer {
+        margin: 0 35px 0;
+    } 
+}
 @media all and (max-width: 320px) {
     .footer {
         max-width: 282px;
@@ -24,5 +28,6 @@ line-height: 22px;
     .footer__copyright {
         font-size: 14px;
         line-height: 17px;
+
     }
 }

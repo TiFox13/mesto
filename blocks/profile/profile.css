@@ -6,11 +6,23 @@
     margin: 0 auto;
     padding: 36.25px 0 47.25px;
 }
+@media all and (max-width: 950px) {
+    .profile { 
+        margin: 0 35px;
+    }
+}
 
-@media all and (max-width: 320px) {
+@media all and (max-width: 850px) {
     .profile {
-        display: block;
+        flex-direction: column;
+        max-width: 600px;
         margin: 0 auto;
+    }
+}
+
+@media all and (max-width: 550px) {
+    .profile {
+        max-width: 288px;
         padding: 38.25px 0 36px;
     }
 }
@@ -22,8 +34,9 @@
     border-radius: 50%;
 }
 
-@media all and (max-width: 320px) {
+@media all and (max-width: 550px) {
     .profile__avatar {
+   
         margin: 0 auto;
     }
 }
@@ -33,10 +46,13 @@
     display: flex;
     color: #FFF;
 }
-@media all and (max-width: 320px) {
+
+
+@media all and (max-width: 550px) {
     .profile__info {
-        display: block;
-        
+        flex-direction: column;
+        max-width: 282px;
+
     }
 }
 
@@ -48,13 +64,13 @@
     line-height: 1.14;
 }
 
-@media all and (max-width: 320px) {
+@media all and (max-width: 550px) {
     .profile__name {
         font-weight: 500;
     font-size: 27px;
     line-height: 33px;
     text-align: center;  
-    padding-top: 22.25px;
+
     }
 }
 
@@ -65,15 +81,19 @@
     font-size: 18px;
     line-height: 1.2;
 }
+@media all and (max-width: 850px) {
+    .profile__about {
+    margin: 14px 0 36px;
+} 
+}
 
-
-@media all and (max-width: 320px) {
+@media all and (max-width: 550px) {
     .profile__about {
 
 font-size: 14px;
 line-height: 17px;
 text-align: center;  
-margin: 14px 0 36px ;
+
     }
 }
 
@@ -97,10 +117,10 @@ margin: 14px 0 36px ;
 }
 
 
-@media all and (max-width: 320px) {
+@media all and (max-width: 550px) {
     .add-button {
         width: 282px;
-        
+        margin: 0;
     }
 }
 
@@ -109,11 +129,16 @@ margin: 14px 0 36px ;
     background-image: url(../../images/Edit-Button.svg);
     width: 24px;
     height: 24px;
-    margin: auto 0;
+    margin: auto 30px auto 0;
     cursor: pointer;
 }
 .edit-button:hover {
     opacity: 0.6;
+}
+@media all and (max-width: 550px) {
+    .edit-button {
+        margin: auto 0;
+    }
 }
 .profile__text {
     display: grid;
@@ -121,4 +146,13 @@ margin: 14px 0 36px ;
     grid-template-rows: repeat(2, auto);
     align-content: center;
     column-gap: 18px;
+    margin-top: 22.25px;
+}
+@media all and (max-width: 450px) {
+    .profile__text {
+        justify-content: center;
+        column-gap: 10;
+        grid-template-columns:189px 25px;
+
+    }
 }
