@@ -1,0 +1,17 @@
+.form__item {
+    width: 358px;
+    height: 27px;
+    margin: 0 8.3% 30px;
+    border: 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    font-style: normal;
+font-weight: 400;
+font-size: 14px;
+line-height: 17px;
+}
+
+@media all and (max-width: 550px) {
+    .form__item {
+        width: 238px;
+    }
+}

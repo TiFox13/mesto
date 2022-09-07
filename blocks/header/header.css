@@ -15,21 +15,4 @@
         margin: 28px 0 0;
     }
 }
-.header__logo {
-    max-width: 142px;
-    padding-bottom: 41px;
-}
 
-@media all and (max-width: 320px){
-    .header__logo {
-       max-width: 103.74px;
-       padding-bottom: 31.6px;
-       padding-left: 27px;
-    }
-}
-.line {
-    margin: 0;
-    size: 0;
-    color: #545454;
-    opacity: 0.7;
-}

@@ -1,0 +1,9 @@
+.like {
+    background-image: url(../../images/like.svg);
+    width: 22px;
+    height: 19px;
+}
+.like:hover {
+    opacity: 0.5;
+}
+

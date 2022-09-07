@@ -11,20 +11,16 @@
 
 <body class="page">
     <div class="page__content">
-
         <section class="popup">
-            <div class="popup-content">
-             
-                     <form class="form">
-                        <button class="close-button" href="#"></button>
-                        <fieldset class="form__input-container">
-                            <h2 class="form__heading">Редактировать профиль</h2>
-                            <input type="text" class="form__item name" value="Жак-Ив Кусто">
-                            <input type="text" class="form__item about" value="Исследователь океана">
-                            <input type="submit" class="save-button" value="Сохранить">
-                        </fieldset>
-                    </form>
-              
+            <form class="form">
+                <button class="close-button" ></button>
+                <fieldset class="form__input-container">
+                    <h2 class="form__heading">Редактировать профиль</h2>
+                    <input type="text" class="form__item name" value="Жак-Ив Кусто">
+                    <input type="text" class="form__item about" value="Исследователь океана">
+                    <input type="submit" class="save-button" value="Сохранить">
+                </fieldset>
+            </form>
         </section>
 
 
@@ -34,76 +30,76 @@
         </header>
 
         <main>
-        <div class="profile">
-            <div class="profile__info">
-                <img class="profile__avatar" src="images/avatar.jpg">
-                <div class="profile__text">
-                    <h3 class="profile__name">Жак-Ив Кусто</h3>
-                    <a class="edit-button" href="#"></a>
-                    <p class="profile__about">Исследователь океана</p>
+            <section class="profile">
+                <div class="profile__info">
+                    <img class="profile__avatar" src="images/avatar.jpg" alt="Аватар пользователя">
+                    <div class="profile__text">
+                        <h1 class="profile__name">Жак-Ив Кусто</h1>
+                        <a class="edit-button" href="#"></a>
+                        <p class="profile__about">Исследователь океана</p>
+                    </div>
                 </div>
-            </div> 
-            <button class="add-button"></button>
-        </div>
+                <button class="add-button"></button>
+            </section>
 
 
-        <div class="elements">
-            <div class="element">
-                <img class="element__photo" src="images/karach.jpg">
-                <div class="element__info">
-                <p class="element__text">Карачаевск</p>
-                <a class="like" href="#"></a>
-            </div>
-            </div>
-            
-            <div class="element">
-                <img class="element__photo" src="images/elbrus.jpg">
-                <div class="element__info">
-                    <p class="element__text">Гора Эльбрус</p>
-                    <a class="like" href="#"></a>
+            <section class="elements">
+                <div class="element">
+                    <img class="element__photo" src="images/karach.jpg" alt="старинная, полуразрушенная церковь в горах">
+                    <div class="element__info">
+                        <h2 class="element__text">Карачаевск</h2>
+                        <a class="like" href="#"></a>
+                    </div>
                 </div>
-            </div>
 
-            <div class="element">
-                <img class="element__photo" src="images/dombay.jpg">
-                <div class="element__info">
-                    <p class="element__text">Домбай</p>
-                    <a class="like" href="#"></a>
+                <div class="element">
+                    <img class="element__photo" src="images/elbrus.jpg" alt="плато с горой на горизонте">
+                    <div class="element__info">
+                        <h2 class="element__text">Гора Эльбрус</h2>
+                        <a class="like" href="#"></a>
+                    </div>
                 </div>
-            </div>
 
-            <div class="element">
-                <img class="element__photo" src="images/elbrus.jpg">
-                <div class="element__info">
-                    <p class="element__text">Гора Эльбрус</p>
-                    <a class="like" href="#"></a>
+                <div class="element">
+                    <img class="element__photo" src="images/dombay.jpg" alt="горные склоны, покрытые лесом и острый хребет">
+                    <div class="element__info">
+                        <h2 class="element__text">Домбай</h2>
+                        <a class="like" href="#"></a>
+                    </div>
                 </div>
-            </div>
 
-            <div class="element">
-                <img class="element__photo" src="images/dombay.jpg">
-                <div class="element__info">
-                    <p class="element__text">Домбай</p>
-                    <a class="like" href="#"></a>
+                <div class="element">
+                    <img class="element__photo" src="images/elbrus.jpg" alt="плато с горой на горизонте">
+                    <div class="element__info">
+                        <h2 class="element__text">Гора Эльбрус</h2>
+                        <a class="like" href="#"></a>
+                    </div>
                 </div>
-            </div>
 
-            <div class="element">
-                <img class="element__photo" src="images/karach.jpg">
-                <div class="element__info">
-                    <p class="element__text">Карачаево-Черкессия</p>
-                    <a class="like" href="#"></a>
+                <div class="element">
+                    <img class="element__photo" src="images/dombay.jpg" alt="горные склоны, покрытые лесом и острый хребет">
+                    <div class="element__info">
+                        <h2 class="element__text">Домбай</h2>
+                        <a class="like" href="#"></a>
+                    </div>
                 </div>
-            </div>
-        </div>
+
+                <div class="element">
+                    <img class="element__photo" src="images/karach.jpg" alt="старинная, полуразрушенная церковь в горах">
+                    <div class="element__info">
+                        <h2 class="element__text">Карачаево-Черкессия</h2>
+                        <a class="like" href="#"></a>
+                    </div>
+                </div>
+            </section>
         </main>
 
         <footer class="footer">
             <p class="footer__copyright">&copy; 2022. Мозина Полина</p>
         </footer>
     </div>
+
+<script src="index.js"></script>
+
 </body>
-
-<script src="script.js"></script>
-
 </html>
