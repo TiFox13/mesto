@@ -16,7 +16,7 @@
 @media all and (max-width:850px) {
     .elements {
         max-width: 600px;
-        grid-template-columns: repeat(2, 1fr); 
+        grid-template-columns: repeat(2, 1fr);
         margin: 0 auto;
     }
 }
