@@ -11,4 +11,5 @@
 * отладить JS-код
 
 ### Ссылка на проект на GitHub
+https://tifox13.github.io/mesto/
 
