@@ -9,10 +9,15 @@
     } 
 }
 
+@media all and (max-width:550px) {
+    .header {
+        margin: 0;
+    }
+}
+
 @media all and (max-width: 320px){
     .header {
         max-width: 320px;
-        margin: 28px 0 0;
     }
 }
 
