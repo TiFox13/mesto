@@ -5,6 +5,7 @@
     align-content: center;
     column-gap: 18px;
     margin-top: 22.25px;
+    padding-left: 30px;
 }
 @media all and (max-width: 450px) {
     .profile__text {

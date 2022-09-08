@@ -9,8 +9,11 @@
     padding: 25px 0 31px;
     max-width: 190px;
 }
+
+/*
 @media all and (max-width:650px) {
     .element__text {
         max-width: 145px;
     }
 }
+*/

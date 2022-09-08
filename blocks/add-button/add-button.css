@@ -22,5 +22,6 @@
     .add-button {
         width: 282px;
         margin: 0;
+        background-size: 17px 17px;
     }
 }
