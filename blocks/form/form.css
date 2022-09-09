@@ -1,11 +1,4 @@
 .form {
-    margin: calc((100vh - 330px)/2) auto;
-    width: 430px;
-    height: 330px;
-}
-@media all and (max-width: 550px) {
-    .form {
-        width: 288px;
-        height: 322px;
-    }
+    background-color: #fff;
+    border-radius: 10px;
 }

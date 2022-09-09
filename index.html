@@ -6,27 +6,13 @@
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
     <title>Mesto</title>
     <link rel="stylesheet" href="pages/index.css">
-
 </head>
 
 <body class="page">
     <div class="page__content">
-        <section class="popup">
-            <form class="form">
-                <button type="button" class="close-button" ></button>
-                <fieldset class="form__input-container">
-                    <h2 class="form__heading">Редактировать профиль</h2>
-                    <input type="text" class="form__item name" value="Жак-Ив Кусто">
-                    <input type="text" class="form__item about" value="Исследователь океана">
-                    <input type="submit" class="save-button" value="Сохранить">
-                </fieldset>
-            </form>
-        </section>
-
 
         <header class="header">
             <img class="header__logo" src="images/header-logo.svg" alt="логотип Место">
-            <hr class="line">
         </header>
 
         <main>
@@ -35,71 +21,84 @@
                     <img class="profile__avatar" src="images/avatar.jpg" alt="Аватар пользователя">
                     <div class="profile__text">
                         <h1 class="profile__name">Жак-Ив Кусто</h1>
-                        <button type="button" class="edit-button"></button>
+                        <button type="button" class="edit-button" aria-label="редактировать профиль."></button>
                         <p class="profile__about">Исследователь океана</p>
                     </div>
                 </div>
-                <button type="button" class="add-button"></button>
+                <button type="button" class="add-button" aria-label="добавить."></button>
             </section>
 
 
             <section class="elements">
-                <div class="element">
-                    <img class="element__photo" src="images/karach.jpg" alt="старинная, полуразрушенная церковь в горах">
+                <article class="element">
+                    <img class="element__photo" src="images/karach.jpg" alt="старинная, полуразрушенная церковь в горах.">
                     <div class="element__info">
                         <h2 class="element__text">Карачаевск</h2>
-                        <button type="button" class="like"></button>
+                        <button type="button" class="like" aria-label="нравится, лайк."></button>
                     </div>
-                </div>
+                </article>
 
-                <div class="element">
-                    <img class="element__photo" src="images/elbrus.jpg" alt="плато с горой на горизонте">
+                <article class="element">
+                    <img class="element__photo" src="images/elbrus.jpg" alt="плато с горой на горизонте.">
                     <div class="element__info">
                         <h2 class="element__text">Гора Эльбрус</h2>
-                        <button type="button" class="like"></button>
+                        <button type="button" class="like" aria-label="нравится, лайк."></button>
                     </div>
-                </div>
+                </article>
 
-                <div class="element">
-                    <img class="element__photo" src="images/dombay.jpg" alt="горные склоны, покрытые лесом и острый хребет">
+                <article class="element">
+                    <img class="element__photo" src="images/dombay.jpg" alt="горные склоны, покрытые лесом и острый хребет.">
                     <div class="element__info">
                         <h2 class="element__text">Домбай</h2>
-                        <button type="button" class="like"></button>
+                        <button type="button" class="like" aria-label="нравится, лайк."></button>
                     </div>
-                </div>
+                </article>
 
-                <div class="element">
-                    <img class="element__photo" src="images/elbrus.jpg" alt="плато с горой на горизонте">
+                <article class="element">
+                    <img class="element__photo" src="images/elbrus.jpg" alt="плато с горой на горизонте.">
                     <div class="element__info">
                         <h2 class="element__text">Гора Эльбрус</h2>
-                        <button type="button" class="like"></button>
+                        <button type="button" class="like" aria-label="нравится, лайк."></button>
                     </div>
-                </div>
+                </article>
 
-                <div class="element">
-                    <img class="element__photo" src="images/dombay.jpg" alt="горные склоны, покрытые лесом и острый хребет">
+                <article class="element">
+                    <img class="element__photo" src="images/dombay.jpg" alt="горные склоны, покрытые лесом и острый хребет.">
                     <div class="element__info">
                         <h2 class="element__text">Домбай</h2>
-                        <button type="button" class="like"></button>
+                        <button type="button" class="like" aria-label="нравится, лайк."></button>
                     </div>
-                </div>
+                </article>
 
-                <div class="element">
-                    <img class="element__photo" src="images/karach.jpg" alt="старинная, полуразрушенная церковь в горах">
+                <article class="element">
+                    <img class="element__photo" src="images/karach.jpg" alt="старинная, полуразрушенная церковь в горах.">
                     <div class="element__info">
                         <h2 class="element__text">Карачаево-Черкессия</h2>
-                        <button type="button" class="like"></button>
+                        <button type="button" class="like" aria-label="нравится, лайк."></button>
                     </div>
-                </div>
+                </article>
             </section>
         </main>
 
         <footer class="footer">
             <p class="footer__copyright">&copy; 2022. Мозина Полина</p>
         </footer>
+        <div class="popup">
+            <div class="form__container">
+                <button type="button" class="close-button" aria-label="закрыть."></button>
+                <form class="form" name="edit-form" method="post">
+                    <h2 class="form__heading">Редактировать профиль</h2>
+                    <fieldset class="form__input-container">
+                        <input type="text" class="form__item form__item_content_name" name="account-name" placeholder="Имя">
+                        <input type="text" class="form__item form__item_content_about" name="account-about" placeholder="О себе">
+                    </fieldset>
+                    <input type="submit" class="save-button" value="Сохранить" aria-label="сохранить.">
+                </form>
+            </div>
+        </div>
     </div>
 
-<script src="index.js"></script>
+<script src="scripts/index.js"></script>
 
 </body>
 </html>

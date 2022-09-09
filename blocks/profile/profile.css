@@ -7,7 +7,7 @@
     padding: 36.25px 0 47.25px;
 }
 @media all and (max-width: 950px) {
-    .profile { 
+    .profile {
         margin: 0 35px;
     }
 }
@@ -22,7 +22,7 @@
 
 @media all and (max-width: 550px) {
     .profile {
-        max-width: 288px;
+        max-width: 282px;
         padding: 38.25px 0 36px;
     }
 }

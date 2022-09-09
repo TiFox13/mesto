@@ -14,7 +14,7 @@
     }
 }
 
-@media all and (max-width:850px) {
+@media all and (max-width:880px) {
     .elements {
         max-width: 600px;
         grid-template-columns: repeat(2, 1fr);
@@ -28,7 +28,7 @@
     }
 }
 
-@media all and (max-width: 550px) {
+@media all and (max-width: 600px) {
     .elements {
         max-width: 282px;
         grid-template-columns: 1fr;

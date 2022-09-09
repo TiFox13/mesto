@@ -6,7 +6,10 @@
     background-color: #000;
     border: 0;
     border-radius: 2px;
-    margin: 0 8.23%;
+    margin: 18px 8.23% 37px;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 22px;
 }
 .save-button:hover {
     cursor: pointer;
@@ -14,6 +17,8 @@
 }
 @media all and (max-width: 550px) {
     .save-button {
+        font-size: 14px;
+        line-height: 17px;
         width: 238px;
         margin-top: 15px;
     }
