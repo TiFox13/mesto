@@ -5,6 +5,7 @@
     color: #fff;
     background-color: #000;
     border: 0;
+    padding: 0;
     border-radius: 2px;
     margin: 18px 8.23% 37px;
     font-weight: 400;
@@ -17,10 +18,12 @@
 }
 @media all and (max-width: 550px) {
     .save-button {
+        height: 46px;
         font-size: 14px;
         line-height: 17px;
         width: 238px;
         margin-top: 15px;
+        margin: 15px 8.23% 25px;
     }
-    
+
 }
