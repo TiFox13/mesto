@@ -30,54 +30,17 @@
 
 
             <section class="elements">
-                <article class="element">
+                <template id = "card">
+                  <article class="element">
+                    <button type="button" class="trash-button" aria-label="удалить."></button>
                     <img class="element__photo" src="images/karach.jpg" alt="старинная, полуразрушенная церковь в горах.">
                     <div class="element__info">
                         <h2 class="element__text">Карачаевск</h2>
                         <button type="button" class="like" aria-label="нравится, лайк."></button>
                     </div>
                 </article>
-
-                <article class="element">
-                    <img class="element__photo" src="images/elbrus.jpg" alt="плато с горой на горизонте.">
-                    <div class="element__info">
-                        <h2 class="element__text">Гора Эльбрус</h2>
-                        <button type="button" class="like" aria-label="нравится, лайк."></button>
-                    </div>
-                </article>
-
-                <article class="element">
-                    <img class="element__photo" src="images/dombay.jpg" alt="горные склоны, покрытые лесом и острый хребет.">
-                    <div class="element__info">
-                        <h2 class="element__text">Домбай</h2>
-                        <button type="button" class="like" aria-label="нравится, лайк."></button>
-                    </div>
-                </article>
-
-                <article class="element">
-                    <img class="element__photo" src="images/elbrus.jpg" alt="плато с горой на горизонте.">
-                    <div class="element__info">
-                        <h2 class="element__text">Гора Эльбрус</h2>
-                        <button type="button" class="like" aria-label="нравится, лайк."></button>
-                    </div>
-                </article>
-
-                <article class="element">
-                    <img class="element__photo" src="images/dombay.jpg" alt="горные склоны, покрытые лесом и острый хребет.">
-                    <div class="element__info">
-                        <h2 class="element__text">Домбай</h2>
-                        <button type="button" class="like" aria-label="нравится, лайк."></button>
-                    </div>
-                </article>
-
-                <article class="element">
-                    <img class="element__photo" src="images/karach.jpg" alt="старинная, полуразрушенная церковь в горах.">
-                    <div class="element__info">
-                        <h2 class="element__text">Карачаево-Черкессия</h2>
-                        <button type="button" class="like" aria-label="нравится, лайк."></button>
-                    </div>
-                </article>
-            </section>
+                </template>
+              </section>
         </main>
 
         <footer class="footer">
@@ -93,6 +56,20 @@
                         <input type="text" class="form__item form__item_content_about" name="account-about" placeholder="О себе">
                     </fieldset>
                     <input type="submit" class="save-button" value="Сохранить" aria-label="сохранить.">
+                </form>
+            </div>
+        </div>
+
+        <div class="popup">
+            <div class="popup__container">
+                <button type="button" class="close-button" aria-label="закрыть."></button>
+                <form class="form new-plase-form" name="edit-form" method="post">
+                    <h2 class="form__heading">Новое место</h2>
+                    <fieldset class="form__input-container">
+                        <input type="text" class="form__item form__item_content_plase-name" name="plase-name" placeholder="Название">
+                        <input type="text" class="form__item form__item_content_plase-image" name="plase-image" placeholder="Ссылка на картинку">
+                    </fieldset>
+                    <input type="submit" class="save-button" value="Создать" aria-label="создать.">
                 </form>
             </div>
         </div>
