@@ -40,22 +40,9 @@
 @import url(../blocks/popup/__container/popup__container.css);
 @import url(../blocks/popup/_opened/popup_opened.css);
 
+@import url(../blocks/trash-button/trash-button.css);
+@import url(../blocks/popup-image/popup-image.css);
+@import url(../blocks/popup-image/__container/popup-image__container.css);
+@import url(../blocks/popup-image/__image/popup-image__image.css);
+@import url(../blocks/popup-image/__plase-info/popup-image__plase-info.css);
 
-
-.trash-button {
-    background-image: url(../images/Trash.svg);
-    background-color: rgba(0, 0, 0, 0) ;
-    padding: 0;
-    border: 0;
-    width: 18px;
-    height: 19px;
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    cursor: pointer;
-}
-
-.trash-button:hover {
-    cursor: pointer;
-    opacity: 0.6;
-}
