@@ -27,7 +27,7 @@ const initialCards = [
 
 const editButton = document.querySelector('.edit-button'); //кнопка "редактировать"
 const closeButtons = document.querySelectorAll('.close-button'); //кнопка "закрыть форму"
-const popups = document.querySelectorAll('.popup'); //всплывающее окошко с формой
+//const popups = document.querySelectorAll('.popup'); //всплывающее окошко с формой
 
 let profileName = document.querySelector('.profile__name'); //вот переменная, куда загрузим имя
 let profileAbout = document.querySelector('.profile__about'); // вот сюда мы загрудим остальную инфу
@@ -45,21 +45,22 @@ let cardMaket = document.querySelector('#template-card'); //болванка д�
 let element = cardMaket.content; //содержимое болванки
 const addButton = document.querySelector('.add-button');  // Это кнопка добавления нового места
 
-let popapImg = document.querySelector('.popup-image');
-
-
-
+//let popapImg = document.querySelector('.popup-image'); надо убрать за нендобностью
+let p1 = document.querySelector('.popup_edit-profile');
+let cb1 = document.querySelector('.close-button_profile-popup');
+let p2 = document.querySelector('.popup_new-plase');
+let cb2 = document.querySelector('.close-button_new-card-popup');
+let p3 = document.querySelector('.popup_big-image');
+let cb3 = document.querySelector('.close-button_big-image-popup');
 
 //функция открытия формы
-function showClick(index) {
-    nameInput.value = profileName.textContent; // подгрузили в поля формы нужное имя
-    jobInput.value = profileAbout.textContent; // то же самое для остальной инфы
-    popups[index].classList.add('popup_opened');
+function showClick(el) {
+     el.classList.add('popup_opened');
    }
 
 //функция закрытия попапа
-function closeClick(index) {
-    popups[index].classList.remove('popup_opened');
+function closeClick(el) {
+    el.classList.remove('popup_opened');
 }
 
 //функция сохранения изменений в форме
@@ -67,7 +68,7 @@ function formSubmitHandler (evt) {
     evt.preventDefault(); //отключили стандартную отправку формы
     profileName.textContent = nameInput.value; // сказали "запиши мне в ProfileName содержимое поля с именем"
     profileAbout.textContent = jobInput.value; // то же самое для остальной инфы
-    closeClick(0); // вызвали функцию закрытия формы
+    closeClick(p1); // вызвали функцию закрытия формы
 }
 
 
@@ -117,10 +118,8 @@ function createNewPlace (evt) {
   addCard(newPlase);
   plaseName.value = '';  //очистили поле
   plaseImage.value =''; //очистили поле
-  closeClick(1); // вызвали функцию закрытия этой формы
+  closeClick(p2); // вызвали функцию закрытия этой формы
 }
-
-
 
 
 //это функция с кнопочками на карточках
@@ -148,12 +147,21 @@ element.querySelector('.element__photo').addEventListener('click', function(evt)
  })
 }
 
+editButton.addEventListener('click', ()=> {
+  nameInput.value = profileName.textContent; // подгрузили в поля формы нужное имя
+  jobInput.value = profileAbout.textContent; // то же самое для остальной инфы
+  showClick(p1);
+}); // Открытие первого окна(редактирование профиля)
 
-editButton.addEventListener('click', ()=> showClick(0)); // Открытие первого окна(редактирование профиля)
-addButton.addEventListener('click', ()=> showClick(1)); // Открытие второго окна (создание карточек)
-closeButtons[0].addEventListener('click', ()=> closeClick(0)); // Закрытие первого окна
-closeButtons[1].addEventListener('click', ()=> closeClick(1)) // Закрытие второго окна
-closeButtons[2].addEventListener('click', ()=> closeClick(2)) //закрытие окна с увеличенной картинкой                                                                     
+
+addButton.addEventListener('click', ()=> {
+  plaseName.value = '';  //очистили поле
+  plaseImage.value =''; //очистили поле
+ showClick(p2);
+}); // Открытие второго окна (создание карточек)
+cb1.addEventListener('click', ()=> closeClick(p1)); // Закрытие первого окна
+cb2.addEventListener('click', ()=> closeClick(p2)) // Закрытие второго окна
+cb3.addEventListener('click', ()=> closeClick(p3)) //закрытие окна с увеличенной картинкой                                                                     
 formElement.addEventListener('submit', formSubmitHandler); //при событии "отправка" запускаем функцию редактирования данных
 newPlaseForm.addEventListener('submit', createNewPlace); // при событии "отправка" создаем новую карточку
 
