@@ -1,7 +1,6 @@
 .element__img-container {
     max-width: 100%;
-    padding-top: 100%;
+    min-height: 78%;
     background-color: black;
-    color: white;  
+    line-height: 0%;   /*Я не знаю, почему, но без этого контейнер не был квадратным. Ни при таком способе задания высоты, ни при использовании aspect-ratio*/
     border-radius: 10px 10px 0 0;
-}
