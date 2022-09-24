@@ -56,8 +56,8 @@
                 <form class="form" name="edit-form" method="post">
                     <h2 class="form__heading">Редактировать профиль</h2>
                     <fieldset class="form__input-container">
-                        <input type="text" class="form__item form__item_content_name" name="account-name" placeholder="Имя">
-                        <input type="text" class="form__item form__item_content_about" name="account-about" placeholder="О себе">
+                        <input type="text" class="form__item form__item_content_name" name="account-name" placeholder="Имя" required>
+                        <input type="text" class="form__item form__item_content_about" name="account-about" placeholder="О себе" required>
                     </fieldset>
                     <input type="submit" class="save-button" value="Сохранить" aria-label="сохранить.">
                 </form>
@@ -70,8 +70,8 @@
                 <form class="form new-plase-form" name="edit-form" method="post">
                     <h2 class="form__heading">Новое место</h2>
                     <fieldset class="form__input-container">
-                        <input type="text" class="form__item form__item_content_plase-name" name="plase-name" placeholder="Название">
-                        <input type="text" class="form__item form__item_content_plase-image" name="plase-image" placeholder="Ссылка на картинку">
+                        <input type="text" class="form__item form__item_content_plase-name" name="plase-name" placeholder="Название" required>
+                        <input type="url" class="form__item form__item_content_plase-image" name="plase-image" placeholder="Ссылка на картинку" required>
                     </fieldset>
                     <input type="submit" class="save-button" value="Создать" aria-label="создать.">
                 </form>
