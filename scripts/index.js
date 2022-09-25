@@ -7,21 +7,21 @@ const newPlaceCloseButton = document.querySelector('.close-button_new-card-popup
 const bigImagePopup = document.querySelector('.popup_big-image'); //попап с большой картинкой
 const bigImageCloseButton = document.querySelector('.close-button_big-image-popup'); //кнопка "закрыть большую картинку"
 
-let profileName = document.querySelector('.profile__name'); //вот переменная, куда загрузим имя
-let profileAbout = document.querySelector('.profile__about'); // вот сюда мы загрудим остальную инфу
+const profileName = document.querySelector('.profile__name'); //вот переменная, куда загрузим имя
+const profileAbout = document.querySelector('.profile__about'); // вот сюда мы загрудим остальную инфу
 
 const editProfileForm = editProfilePopup.querySelector('.form');  //вот переменная с формой
 const createNewPlaseForm = newPlacePopup.querySelector('.form');
 
-let nameInput = editProfileForm.querySelector('.form__item_content_name'); //поле формы с именем
-let jobInput = editProfileForm.querySelector('.form__item_content_about'); //поле формы с доп инфой
-
-let placeName = document.querySelector ('.form__item_content_plase-name');  //поле формы для нового места
-let placeImage = document.querySelector('.form__item_content_plase-image');  // поле формы для нового места
+const nameInput = editProfileForm.querySelector('.form__item_content_name'); //поле формы с именем
+const jobInput = editProfileForm.querySelector('.form__item_content_about'); //поле формы с доп инфой
 
 const cardTemplate = document
   .querySelector('#template-card')
   .content.querySelector('.element'); //болванка для карточек
+
+const placeNameInput = document.querySelector('.form__item_content_plase-name'); //поле формы для создания нового места (название)
+const placeLinkInput = document.querySelector('.form__item_content_plase-image');// поле формы для создания нового места (картинка)
 
 const addNewPlaceButton = document.querySelector('.add-button');  // Это кнопка добавления нового места
 
@@ -46,8 +46,8 @@ function SubmitHandlerEditProfileForm (evt) {
 //Функция, кторая делает карточки
 function createCard(item) {
   const card = cardTemplate.cloneNode(true); 
-  let text = card.querySelector('.element__text');
-  let image = card.querySelector('.element__photo');
+  const text = card.querySelector('.element__text');
+  const image = card.querySelector('.element__photo');
 
   text.textContent = item.name;
   image.src = item.link;
@@ -73,8 +73,8 @@ reverseinitialCards.forEach(addCard);
 function createNewPlace (evt) {
   evt.preventDefault(); //отключили стандартную отправку формы
 
-  let name = document.querySelector('.form__item_content_plase-name').value;  //забираем из поля формы название
-  let link = document.querySelector('.form__item_content_plase-image').value; // забираем из поля формы адрес картинки
+  const name = placeNameInput.value;  //забираем из поля формы название
+  const link = placeLinkInput.value; // забираем из поля формы адрес картинки
 
   const newPlase = {name, link}; //создаем массив
   initialCards.unshift(newPlase); 
@@ -102,8 +102,8 @@ function setListenersCard (element) {
   element
     .querySelector('.element__photo')
     .addEventListener('click', function(evt) {
-      let placeImg= bigImagePopup.querySelector('.popup-image__image');
-      let placeInfo= bigImagePopup.querySelector('.popup-image__plase-info');
+      const placeImg= bigImagePopup.querySelector('.popup-image__image');
+      const placeInfo= bigImagePopup.querySelector('.popup-image__plase-info');
 
       placeImg.src = evt.target.src;  //Извините, пожалуйста, Павел.  Вы совершенно правы. 
       placeInfo.textContent = evt.target.alt;
