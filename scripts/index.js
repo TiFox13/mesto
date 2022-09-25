@@ -7,6 +7,8 @@ const newPlaceCloseButton = document.querySelector('.close-button_new-card-popup
 const bigImagePopup = document.querySelector('.popup_big-image'); //попап с большой картинкой
 const bigImageCloseButton = document.querySelector('.close-button_big-image-popup'); //кнопка "закрыть большую картинку"
 
+const elements = document.querySelector('.elements');
+
 const profileName = document.querySelector('.profile__name'); //вот переменная, куда загрузим имя
 const profileAbout = document.querySelector('.profile__about'); // вот сюда мы загрудим остальную инфу
 
@@ -52,14 +54,13 @@ function createCard(item) {
   text.textContent = item.name;
   image.src = item.link;
   image.alt = item.name;
-  setListenersCard(card);
+  setCardListeners(card);
 
   return card;
 };
 
 // функция, которая также навешивает слушатели и выводит на страницу карточки
 function addCard(item) {
-  const elements = document.querySelector('.elements');
   const card =createCard(item);
   elements.prepend(card);
 }
@@ -77,8 +78,8 @@ function createNewPlace (evt) {
   const link = placeLinkInput.value; // забираем из поля формы адрес картинки
 
   const newPlase = {name, link}; //создаем массив
-  initialCards.unshift(newPlase); 
-  console.log(initialCards); //делаем его элементом стартового массива (навсякий случай)
+  initialCards.unshift(newPlase); //делаем его элементом стартового массива (навсякий случай)
+  console.log(initialCards); 
 
   addCard(newPlase);
 
@@ -87,7 +88,7 @@ function createNewPlace (evt) {
 }
 
 //это функция с кнопочками на карточках
-function setListenersCard (element) {                                     
+function setCardListeners (element) {                                     
 //функция любви. отвечает за лайки
   element.querySelector('.like').addEventListener('click', function (evt) {   
     evt.target.classList.toggle('like_active');
