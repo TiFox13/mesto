@@ -41,13 +41,13 @@
   };
 
   //////////////
-  form.addEventListener('submit', function (evt) {
-    evt.preventDefault();
-  });
+  //form.addEventListener('submit', function (evt) {
+  //  evt.preventDefault();
+  //});
   
-  formInput.addEventListener('input', function () {
-    checkInputValidity(form, formInput);
-  });
+  //formInput.addEventListener('input', function () {
+   // checkInputValidity(form, formInput);
+  //});
  /////////////////////
 
 
@@ -60,6 +60,17 @@
     });
   }
 
-  setEventListeners(form);
+//  setEventListeners(form);
 
+  //////////////////////////////////////////////
+  function enableValidation() {
+    const formList = Array.from(document.querySelectorAll('.form'));
+    formList.forEach((formElement) => {
+      formElement.addEventListener('submit', (evt) => {
+        evt.preventDefault();
+      });
+      setEventListeners(formElement);
+    })
+  }
 
+enableValidation();

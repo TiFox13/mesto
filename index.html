@@ -73,8 +73,10 @@
                 <form class="form new-plase-form" name="edit-form" method="post">
                     <h2 class="form__heading">Новое место</h2>
                     <fieldset class="form__input-container">
-                        <input type="text" class="form__item form__item_content_plase-name" name="plase-name" placeholder="Название" required minlength="2" maxlength="30">
-                        <input type="url" class="form__item form__item_content_plase-image" name="plase-image" placeholder="Ссылка на картинку" required>
+                        <input type="text" id="plase-name-input" class="form__item form__item_content_plase-name" name="plase-name" placeholder="Название" required minlength="2" maxlength="30">
+                        <span class = "form__item-error plase-name-input-error"></span>
+                        <input type="url" id="plase-image-input" class="form__item form__item_content_plase-image" name="plase-image" placeholder="Ссылка на картинку" required>
+                        <span class = "form__item-error plase-image-input-error"></span>
                     </fieldset>
                     <input type="submit" class="save-button" value="Создать" aria-label="создать.">
                 </form>
