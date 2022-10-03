@@ -8,10 +8,10 @@
     errorClass: 'popup__error_visible'   //form__item-error-visible?
   }); */
 
-  const form = document.querySelector('.form');
-  const formInput = form.querySelector('.form__item');
+  const formElement = document.querySelector('.form');
+const inputElement = formElement.querySelector('.form__item');
 
-  const formError = form.querySelector(`.${formInput.id}-error`);
+  //const formError = formElement.querySelector(`.${inputElement.id}-error`);
 
   //нужна функция, которая подключает стили ошибки
   const showItemError = (formElement, inputElement, errorMessage) => {
@@ -40,26 +40,28 @@
     }
   };
 
-  //////////////
-  form.addEventListener('submit', function (evt) {
-    evt.preventDefault();
+ inputElement.addEventListener('input', function () {
+    checkInputValidity();
   });
-  
-  formInput.addEventListener('input', function () {
-    checkInputValidity(form, formInput);
-  });
- /////////////////////
 
-
+/*
   function setEventListeners (formElement) {
     const inputList = Array.from(formElement.querySelectorAll('.form__item'));
     inputList.forEach((inputElement) => {
-      inputElement.addEventListener('input', function() {
+      inputElement.addEventListener('input', function () {
         checkInputValidity(formElement, inputElement);
       });
     });
   }
 
-  setEventListeners(form);
+ function enableValidation() {
+  const formList = Array.from(document.querySelectorAll('.form'));
+  formList.forEach((formElement) => {
+    formElement.addEventListener('submit', (evt) => {
+      evt.preventDefault();
+    });
+    setEventListeners(formElement);
+  });
+ }
 
-
+*/
