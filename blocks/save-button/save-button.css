@@ -27,3 +27,10 @@
     }
 
 }
+
+
+.form__submit_inactive {
+    color: #C4C4C4;
+    background-color: #fff;
+    border: #C4C4C4 1px solid;
+}

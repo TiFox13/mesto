@@ -53,9 +53,12 @@
 
   function setEventListeners (formElement) {
     const inputList = Array.from(formElement.querySelectorAll('.form__item'));
+    const saveButton = formElement.querySelector('.save-button');
+
     inputList.forEach((inputElement) => {
       inputElement.addEventListener('input', function() {
         checkInputValidity(formElement, inputElement);
+        toggleFormBatton(inputList, saveButton);
       });
     });
   }
@@ -74,3 +77,19 @@
   }
 
 enableValidation();
+
+const hasValidInput = (inputList) => {
+  return inputList.some((inputElement) => {
+    return !inputElement.validity.valid;
+  })
+}
+const toggleFormBatton = (inputList, saveButton) => {
+  // Если есть хотя бы один невалидный инпут
+  if (hasValidInput(inputList)) {
+    // сделай кнопку неактивной
+    saveButton.classList.add('form__submit_inactive');
+  } else {
+    // иначе сделай кнопку активной
+    saveButton.classList.remove('form__submit_inactive');
+  }
+}; 
