@@ -7,6 +7,7 @@
     <title>Mesto</title>
     <link rel="stylesheet" href="pages/index.css">
     <script src="scripts/cards.js" defer></script>
+    <script src="scripts/validate.js" defer></script>
     <script src="scripts/index.js" defer></script>
 </head>
 
@@ -56,8 +57,9 @@
                 <form class="form" name="edit-form" method="post">
                     <h2 class="form__heading">Редактировать профиль</h2>
                     <fieldset class="form__input-container">
-                        <input type="text" class="form__item form__item_content_name" name="account-name" placeholder="Имя" required>
-                        <input type="text" class="form__item form__item_content_about" name="account-about" placeholder="О себе" required>
+                        <input type="text" id ="account-name-input" class="form__item form__item_content_name" name="account-name" placeholder="Имя" required minlength="2" maxlength="40">
+                        <span class = "form__item-error account-name-input-error"></span>
+                        <input type="text" id ="account-about-input" class="form__item form__item_content_about" name="account-about" placeholder="О себе" required minlength="2" maxlength="200">
                     </fieldset>
                     <input type="submit" class="save-button" value="Сохранить" aria-label="сохранить.">
                 </form>
@@ -70,7 +72,7 @@
                 <form class="form new-plase-form" name="edit-form" method="post">
                     <h2 class="form__heading">Новое место</h2>
                     <fieldset class="form__input-container">
-                        <input type="text" class="form__item form__item_content_plase-name" name="plase-name" placeholder="Название" required>
+                        <input type="text" class="form__item form__item_content_plase-name" name="plase-name" placeholder="Название" required minlength="2" maxlength="30">
                         <input type="url" class="form__item form__item_content_plase-image" name="plase-image" placeholder="Ссылка на картинку" required>
                     </fieldset>
                     <input type="submit" class="save-button" value="Создать" aria-label="создать.">
