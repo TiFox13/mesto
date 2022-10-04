@@ -156,14 +156,33 @@ newPlacePopup.addEventListener('keydown', function(evt) {
 });
 
 
-const editProfilePopupBox = editProfilePopup.querySelector('.popup__container');
 
-function q (e) {
-  if (e.target !=editProfilePopupBox) {
+editProfilePopup.addEventListener('mousedown', (evt) => {
+  if (evt.target === evt.currentTarget) {
     closePopup(editProfilePopup);
-  }
-}
+  };
+});
 
+newPlacePopup.addEventListener('mousedown', (evt) => {
+  if (evt.target === evt.currentTarget) {
+    closePopup(newPlacePopup);
+  };
+});
+
+bigImagePopup.addEventListener('mousedown', (evt) => {
+  if (evt.target === evt.currentTarget) {
+  closePopup(bigImagePopup);
+  };
+});
+
+/*const editProfilePopupBox = editProfilePopup.querySelector('.popup__container');
+
+editProfilePopup.addEventListener('click', function(e) {
+  if (e.target != editProfilePopupBox){
+    closePopup(editProfilePopup)        //ну вот это типа работаает, но попап закрывается, даже если кликать внутри бокса ( видимо, перекрывают дргие внутренние элементы)
+  }
+})
+*/
 
 /*const outClick = function(e) {
   if (e.target.className != 'popup__container'){
