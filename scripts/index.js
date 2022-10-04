@@ -27,9 +27,36 @@ const placeLinkInput = document.querySelector('.form__item_content_plase-image')
 
 const addNewPlaceButton = document.querySelector('.add-button');  // Это кнопка добавления нового места
 
+
+// общая функция для закрытия через Esc
+function closeEscape (evt) {
+  if (evt.key ==='Escape') {
+  el.closePopup();
+  }
+};
+
+// общя функция закрытия через клик вне области попапа
+function closeFromOverlay(evt) {
+  if (evt.target === evt.currentTarget) {
+    el.closePopup();
+  }
+};
+
+
 //функция открытия формы
 function showPopup(el) {
   el.classList.add('popup_opened');
+  document.addEventListener('keydown', function(evt) {   // нужно вынести в отдельную функцию. функция есть, но не работает
+    if (evt.key ==='Escape') {
+      closePopup(el);
+    }
+  });
+  el.addEventListener('mousedown', (evt) => {      // нужно вынести в отдельную функцию. фунгкция есть но не работает
+    if (evt.target === evt.currentTarget) {
+      closePopup(el);
+    };
+  });
+  
 }
 
 //функция закрытия попапа
@@ -135,61 +162,3 @@ newPlaceCloseButton.addEventListener('click', ()=>{
 bigImageCloseButton.addEventListener('click', ()=> closePopup(bigImagePopup)); //закрытие окна с увеличенной картинкой                                                                     
 editProfileForm.addEventListener('submit', SubmitHandlerEditProfileForm); //при событии "отправка" запускаем функцию редактирования данных
 createNewPlaseForm.addEventListener('submit', createNewPlace); // при событии "отправка" создаем новую карточку
-
-
-
-////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////
-
-// попробуем написать реагирование на кнопки
-
-editProfilePopup.addEventListener('keydown', function(evt) {
-  if (evt.key ==='Escape') {
-    closePopup(editProfilePopup);
-  }
-});
-
-newPlacePopup.addEventListener('keydown', function(evt) {
-  if (evt.key ==='Escape') {
-    closePopup(newPlacePopup);
-  }
-});
-
-
-
-editProfilePopup.addEventListener('mousedown', (evt) => {
-  if (evt.target === evt.currentTarget) {
-    closePopup(editProfilePopup);
-  };
-});
-
-newPlacePopup.addEventListener('mousedown', (evt) => {
-  if (evt.target === evt.currentTarget) {
-    closePopup(newPlacePopup);
-  };
-});
-
-bigImagePopup.addEventListener('mousedown', (evt) => {
-  if (evt.target === evt.currentTarget) {
-  closePopup(bigImagePopup);
-  };
-});
-
-/*const editProfilePopupBox = editProfilePopup.querySelector('.popup__container');
-
-editProfilePopup.addEventListener('click', function(e) {
-  if (e.target != editProfilePopupBox){
-    closePopup(editProfilePopup)        //ну вот это типа работаает, но попап закрывается, даже если кликать внутри бокса ( видимо, перекрывают дргие внутренние элементы)
-  }
-})
-*/
-
-/*const outClick = function(e) {
-  if (e.target.className != 'popup__container'){
-    closePopup(editProfilePopup)
-  }
-}
-*/
-//const editProfilePopupOverlay = editProfilePopup.querySelector('.popup__container');
-
-//editProfilePopupOverlay.addEventListener('click', closePopup(editProfilePopup));

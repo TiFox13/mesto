@@ -2,29 +2,3 @@
     background-color: #fff;
     border-radius: 10px;
 }
-
-
-.form__item_type_error {
-    border-bottom: rgb(255, 0, 0);
-}
-
-.form__item-error {
-    color: red;
-
-    min-height: 30px;
-    
-    font-weight: 400;
-    font-size: 12px;
-    line-height: 15px;
-    /*margin: 0 8.3%;
-    width: 358px;*/
-}
-
-.form__input-field {
-    display: flex;
-    flex-direction: column;
-    
-    margin: 0 8.3% 0;
-    gap: 5px;
-}
-
