@@ -9,12 +9,22 @@
 }
 
 .form__item-error {
-
-    width: 358px;
     color: red;
+
+    min-height: 30px;
+    
     font-weight: 400;
     font-size: 12px;
     line-height: 15px;
-    margin: 0 8.3%;
+    /*margin: 0 8.3%;
+    width: 358px;*/
+}
+
+.form__input-field {
+    display: flex;
+    flex-direction: column;
+    
+    margin: 0 8.3% 0;
+    gap: 5px;
 }
 

@@ -1,8 +1,10 @@
 .form__item {
   box-sizing: border-box;
-    width: 358px;
+    /*width: 358px;   margin: 30px 8.3% 0;*/
+    margin: 0;
+    
     height: 27px;
-    margin: 30px 8.3% 0;
+    
     padding: 0;
     border: 0;
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
@@ -11,12 +13,14 @@ font-weight: 400;
 font-size: 14px;
 line-height: 17px;
 }
-.form__item:first-child {
+/*.form__item:first-child {
     margin: 0 8.3%;
 
 }
+
 @media all and (max-width: 550px) {
     .form__item {
         width: 238px;
     }
 }
+*/
