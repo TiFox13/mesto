@@ -28,41 +28,40 @@ const placeLinkInput = document.querySelector('.form__item_content_plase-image')
 const addNewPlaceButton = document.querySelector('.add-button');  // Это кнопка добавления нового места
 
 
+
+
 // общая функция для закрытия через Esc
-function closeEscape (evt) {
+function closeWithEscape (evt) {
   if (evt.key ==='Escape') {
-  el.closePopup();
+    const popupOpened = document.querySelector('.popup_opened');
+    closePopup(popupOpened);
+  //el.closePopup();
   }
 };
 
 // общя функция закрытия через клик вне области попапа
-function closeFromOverlay(evt) {
+function closeClickOnOverlay(evt) {
   if (evt.target === evt.currentTarget) {
-    el.closePopup();
+    closePopup(evt.target);
+    document.removeEventListener ('keyup', closeWithEscape);
+    el.removeEventListener('mousedown', closeClickOnOverlay)
+    //el.closePopup();
   }
 };
-
 
 //функция открытия формы
 function showPopup(el) {
   el.classList.add('popup_opened');
-  document.addEventListener('keydown', function(evt) {   // нужно вынести в отдельную функцию. функция есть, но не работает
-    if (evt.key ==='Escape') {
-      closePopup(el);
-    }
-  });
-  el.addEventListener('mousedown', (evt) => {      // нужно вынести в отдельную функцию. фунгкция есть но не работает
-    if (evt.target === evt.currentTarget) {
-      closePopup(el);
-    };
-  });
-  
+  document.addEventListener('keydown', closeWithEscape)
+  el.addEventListener('mousedown', closeClickOnOverlay)
 }
+
 
 //функция закрытия попапа
 function closePopup(el) {
   el.classList.remove('popup_opened');
 }
+
 
 //функция сохранения изменений в форме
 function SubmitHandlerEditProfileForm (evt) {
@@ -74,7 +73,7 @@ function SubmitHandlerEditProfileForm (evt) {
 
 //Функция, кторая делает карточки
 function createCard(item) {
-  const card = cardTemplate.cloneNode(true); 
+  const card = cardTemplate.cloneNode(true);
   const text = card.querySelector('.element__text');
   const image = card.querySelector('.element__photo');
 
@@ -106,7 +105,7 @@ function createNewPlace (evt) {
 
   const newPlase = {name, link}; //создаем массив
   initialCards.unshift(newPlase); //делаем его элементом стартового массива (навсякий случай)
-  console.log(initialCards); 
+  console.log(initialCards);
 
   addCard(newPlase);
 
@@ -115,14 +114,14 @@ function createNewPlace (evt) {
 }
 
 //это функция с кнопочками на карточках
-function setCardListeners (element) {                                     
+function setCardListeners (element) {
 //функция любви. отвечает за лайки
-  element.querySelector('.like').addEventListener('click', function (evt) {   
+  element.querySelector('.like').addEventListener('click', function (evt) {
     evt.target.classList.toggle('like_active');
   });
 
 //функция, которая удаляет карточки
-  element.querySelector('.trash-button').addEventListener('click', function(evt) {    
+  element.querySelector('.trash-button').addEventListener('click', function(evt) {
     element.remove();
   });
 
@@ -133,9 +132,9 @@ function setCardListeners (element) {
       const placeImg= bigImagePopup.querySelector('.popup-image__image');
       const placeInfo= bigImagePopup.querySelector('.popup-image__plase-info');
 
-      placeImg.src = evt.target.src;  //Извините, пожалуйста, Павел.  Вы совершенно правы. 
+      placeImg.src = evt.target.src;  //Извините, пожалуйста, Павел.  Вы совершенно правы.
       placeInfo.textContent = evt.target.alt;
-      
+
       showPopup(bigImagePopup)
     });
 }
@@ -146,10 +145,10 @@ editButton.addEventListener('click', ()=> {
   jobInput.value = profileAbout.textContent; // то же самое для остальной инфы
 
   showPopup(editProfilePopup);
-}); 
+});
 
 // Открытие второго попапа (создание карточек)
-addNewPlaceButton.addEventListener('click', ()=> showPopup(newPlacePopup)); 
+addNewPlaceButton.addEventListener('click', ()=> showPopup(newPlacePopup));
 
 editProfileCloseButton.addEventListener('click', ()=> closePopup(editProfilePopup)); // Закрытие первого попапа
 
@@ -157,8 +156,8 @@ editProfileCloseButton.addEventListener('click', ()=> closePopup(editProfilePopu
 newPlaceCloseButton.addEventListener('click', ()=>{
  closePopup(newPlacePopup);
  createNewPlaseForm.reset();
-}); 
+});
 
-bigImageCloseButton.addEventListener('click', ()=> closePopup(bigImagePopup)); //закрытие окна с увеличенной картинкой                                                                     
+bigImageCloseButton.addEventListener('click', ()=> closePopup(bigImagePopup)); //закрытие окна с увеличенной картинкой
 editProfileForm.addEventListener('submit', SubmitHandlerEditProfileForm); //при событии "отправка" запускаем функцию редактирования данных
 createNewPlaseForm.addEventListener('submit', createNewPlace); // при событии "отправка" создаем новую карточку
