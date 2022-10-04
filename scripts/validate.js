@@ -93,3 +93,4 @@ const toggleFormBatton = (inputList, saveButton) => {
     saveButton.classList.remove('form__submit_inactive');
   }
 }; 
+

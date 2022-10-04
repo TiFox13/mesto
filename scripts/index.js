@@ -137,3 +137,40 @@ editProfileForm.addEventListener('submit', SubmitHandlerEditProfileForm); //пр
 createNewPlaseForm.addEventListener('submit', createNewPlace); // при событии "отправка" создаем новую карточку
 
 
+
+////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////
+
+// попробуем написать реагирование на кнопки
+
+editProfilePopup.addEventListener('keydown', function(evt) {
+  if (evt.key ==='Escape') {
+    closePopup(editProfilePopup);
+  }
+});
+
+newPlacePopup.addEventListener('keydown', function(evt) {
+  if (evt.key ==='Escape') {
+    closePopup(newPlacePopup);
+  }
+});
+
+
+const editProfilePopupBox = editProfilePopup.querySelector('.popup__container');
+
+function q (e) {
+  if (e.target !=editProfilePopupBox) {
+    closePopup(editProfilePopup);
+  }
+}
+
+
+/*const outClick = function(e) {
+  if (e.target.className != 'popup__container'){
+    closePopup(editProfilePopup)
+  }
+}
+*/
+//const editProfilePopupOverlay = editProfilePopup.querySelector('.popup__container');
+
+//editProfilePopupOverlay.addEventListener('click', closePopup(editProfilePopup));
