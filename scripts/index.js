@@ -35,7 +35,6 @@ function closeWithEscape (evt) {
   if (evt.key ==='Escape') {
     const popupOpened = document.querySelector('.popup_opened');
     closePopup(popupOpened);
-  //el.closePopup();
   }
 };
 
@@ -45,22 +44,56 @@ function closeClickOnOverlay(evt) {
     closePopup(evt.target);
     document.removeEventListener ('keyup', closeWithEscape);
     el.removeEventListener('mousedown', closeClickOnOverlay)
-    //el.closePopup();
   }
 };
 
 //функция открытия формы
 function showPopup(el) {
   el.classList.add('popup_opened');
-  document.addEventListener('keydown', closeWithEscape)
-  el.addEventListener('mousedown', closeClickOnOverlay)
+  document.addEventListener('keydown', closeWithEscape); //вешаем слушатель для клика по ESC
+  el.addEventListener('mousedown', closeClickOnOverlay); // вешаем слушатель для клика по оверлею
+  hideItemError(el);   //вызываем функцию, которая прячет ошибки
 }
-
 
 //функция закрытия попапа
 function closePopup(el) {
   el.classList.remove('popup_opened');
 }
+
+///////////////////////////////////////////////
+//функция, которая прячет сообщения об ошибках под полями формы
+const hideItemError = (el) => {
+  const inputList = Array.from(el.querySelectorAll('.form__item'));
+  const saveButton = el.querySelector('.save-button')
+  inputList.forEach((inputElement) => {
+    const errorElement = el.querySelector(`.${inputElement.id}-error`);
+    inputElement.classList.remove('form__item_type_error');     
+    errorElement.classList.remove('form__item-error_visible');  
+  });  
+  inactiveFormButton(inputList, saveButton);  //проверим, надо ли сделать кнопку формы активной? вызываем функцию.
+  errorElement.textContent = "";
+}
+
+//проверяет валидность полей и выдает вердикт, валидна форма или нет)
+const hasValidInput = (inputList) => {
+  return inputList.some((inputElement) => { //если невалиднное поле есть, то true
+    return !inputElement.validity.valid; // мне нужен false!
+  })
+}
+
+//функция, которая делать кнопку неактивной
+const inactiveFormButton = (inputList, saveButton) => {
+  // Если есть хотя бы один невалидный инпут
+  if (hasValidInput(inputList)) {
+    // сделай кнопку неактивной
+    saveButton.classList.add('save-button_inactive');
+  } else {
+    // иначе сделай кнопку активной
+    saveButton.classList.remove('save-button_inactive');
+  }
+}; 
+////////////////////////////////////////////////
+
 
 
 //функция сохранения изменений в форме
@@ -132,7 +165,7 @@ function setCardListeners (element) {
       const placeImg= bigImagePopup.querySelector('.popup-image__image');
       const placeInfo= bigImagePopup.querySelector('.popup-image__plase-info');
 
-      placeImg.src = evt.target.src;  //Извините, пожалуйста, Павел.  Вы совершенно правы.
+      placeImg.src = evt.target.src;  
       placeInfo.textContent = evt.target.alt;
 
       showPopup(bigImagePopup)
