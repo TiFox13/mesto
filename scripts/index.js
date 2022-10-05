@@ -42,8 +42,7 @@ function closeWithEscape (evt) {
 function closeClickOnOverlay(evt) {
   if (evt.target === evt.currentTarget) {
     closePopup(evt.target);
-    document.removeEventListener ('keyup', closeWithEscape);
-    el.removeEventListener('mousedown', closeClickOnOverlay)
+
   }
 };
 
@@ -58,6 +57,8 @@ function showPopup(el) {
 //функция закрытия попапа
 function closePopup(el) {
   el.classList.remove('popup_opened');
+  document.removeEventListener ('keyup', closeWithEscape);
+  el.removeEventListener('mousedown', closeClickOnOverlay)
 }
 
 ///////////////////////////////////////////////
@@ -71,7 +72,6 @@ const hideItemError = (el) => {
     errorElement.classList.remove('form__item-error_visible');  
   });  
   inactiveFormButton(inputList, saveButton);  //проверим, надо ли сделать кнопку формы активной? вызываем функцию.
-  errorElement.textContent = "";
 }
 
 //проверяет валидность полей и выдает вердикт, валидна форма или нет)
