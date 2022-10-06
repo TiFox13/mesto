@@ -1,7 +1,9 @@
-const editButton = document.querySelector('.edit-button'); //кнопка "редактировать"
-const closeButtons = document.querySelectorAll('.close-button'); //кнопка "закрыть форму"
-const editProfilePopup = document.querySelector('.popup_edit-profile');  //попап редактирования профиля
-const editProfileCloseButton = document.querySelector('.close-button_profile-popup'); //кнопка "закрыть форму редактирования профиля"
+
+import { setEventListeners } from "./validate.js";
+
+const buttonEdit = document.querySelector('.edit-button'); //кнопка "редактировать"
+const popupEditProfile = document.querySelector('.popup_edit-profile');  //попап редактирования профиля
+const closeButtonEditProfile = document.querySelector('.close-button_profile-popup'); //кнопка "закрыть форму редактирования профиля"
 const newPlacePopup = document.querySelector('.popup_new-plase'); //попап создания карточек
 const newPlaceCloseButton = document.querySelector('.close-button_new-card-popup'); //кнопка "закрыть форму создания карточек"
 const bigImagePopup = document.querySelector('.popup_big-image'); //попап с большой картинкой
@@ -12,11 +14,11 @@ const elements = document.querySelector('.elements');
 const profileName = document.querySelector('.profile__name'); //вот переменная, куда загрузим имя
 const profileAbout = document.querySelector('.profile__about'); // вот сюда мы загрудим остальную инфу
 
-const editProfileForm = editProfilePopup.querySelector('.form');  //вот переменная с формой
-const createNewPlaseForm = newPlacePopup.querySelector('.form');
+const profileEditForm = popupEditProfile.querySelector('.form');  //вот переменная с формой
+const newPlaseCreateForm = newPlacePopup.querySelector('.form');
 
-const nameInput = editProfileForm.querySelector('.form__item_content_name'); //поле формы с именем
-const jobInput = editProfileForm.querySelector('.form__item_content_about'); //поле формы с доп инфой
+const nameInput = profileEditForm.querySelector('.form__item_content_name'); //поле формы с именем
+const jobInput = profileEditForm.querySelector('.form__item_content_about'); //поле формы с доп инфой
 
 const cardTemplate = document
   .querySelector('#template-card')
@@ -25,7 +27,7 @@ const cardTemplate = document
 const placeNameInput = document.querySelector('.form__item_content_plase-name'); //поле формы для создания нового места (название)
 const placeLinkInput = document.querySelector('.form__item_content_plase-image');// поле формы для создания нового места (картинка)
 
-const addNewPlaceButton = document.querySelector('.add-button');  // Это кнопка добавления нового места
+const newPlaceAddButton = document.querySelector('.add-button');  // Это кнопка добавления нового места
 
 
 
@@ -51,7 +53,8 @@ function showPopup(el) {
   el.classList.add('popup_opened');
   document.addEventListener('keydown', closeWithEscape); //вешаем слушатель для клика по ESC
   el.addEventListener('mousedown', closeClickOnOverlay); // вешаем слушатель для клика по оверлею
-  hideItemError(el);   //вызываем функцию, которая прячет ошибки
+  //hideItemError(el); 
+  setEventListeners(el)  //вызываем функцию, которая прячет ошибки
 }
 
 //функция закрытия попапа
@@ -61,47 +64,12 @@ function closePopup(el) {
   el.removeEventListener('mousedown', closeClickOnOverlay)
 }
 
-///////////////////////////////////////////////
-//функция, которая прячет сообщения об ошибках под полями формы
-const hideItemError = (el) => {
-  const inputList = Array.from(el.querySelectorAll('.form__item'));
-  const saveButton = el.querySelector('.save-button')
-  inputList.forEach((inputElement) => {
-    const errorElement = el.querySelector(`.${inputElement.id}-error`);
-    inputElement.classList.remove('form__item_type_error');     
-    errorElement.classList.remove('form__item-error_visible');  
-  });  
-  inactiveFormButton(inputList, saveButton);  //проверим, надо ли сделать кнопку формы активной? вызываем функцию.
-}
-
-//проверяет валидность полей и выдает вердикт, валидна форма или нет)
-const hasValidInput = (inputList) => {
-  return inputList.some((inputElement) => { //если невалиднное поле есть, то true
-    return !inputElement.validity.valid; // мне нужен false!
-  })
-}
-
-//функция, которая делать кнопку неактивной
-const inactiveFormButton = (inputList, saveButton) => {
-  // Если есть хотя бы один невалидный инпут
-  if (hasValidInput(inputList)) {
-    // сделай кнопку неактивной
-    saveButton.classList.add('save-button_inactive');
-  } else {
-    // иначе сделай кнопку активной
-    saveButton.classList.remove('save-button_inactive');
-  }
-}; 
-////////////////////////////////////////////////
-
-
-
 //функция сохранения изменений в форме
-function SubmitHandlerEditProfileForm (evt) {
+function submitHandlerEditProfileForm (evt) {
   evt.preventDefault(); //отключили стандартную отправку формы
   profileName.textContent = nameInput.value; // сказали "запиши мне в ProfileName содержимое поля с именем"
   profileAbout.textContent = jobInput.value; // то же самое для остальной инфы
-  closePopup(editProfilePopup); // вызвали функцию закрытия формы
+  closePopup(popupEditProfile); // вызвали функцию закрытия формы
 }
 
 //Функция, кторая делает карточки
@@ -120,7 +88,7 @@ function createCard(item) {
 
 // функция, которая также навешивает слушатели и выводит на страницу карточки
 function addCard(item) {
-  const card =createCard(item);
+  const card = createCard(item);
   elements.prepend(card);
 }
 
@@ -137,12 +105,9 @@ function createNewPlace (evt) {
   const link = placeLinkInput.value; // забираем из поля формы адрес картинки
 
   const newPlase = {name, link}; //создаем массив
-  initialCards.unshift(newPlase); //делаем его элементом стартового массива (навсякий случай)
-  console.log(initialCards);
-
   addCard(newPlase);
 
-  createNewPlaseForm.reset();
+  newPlaseCreateForm.reset(); // ПО ИДЕЕ: очистили поля формы
   closePopup(newPlacePopup); // вызвали функцию закрытия этой формы
 }
 
@@ -166,31 +131,35 @@ function setCardListeners (element) {
       const placeInfo= bigImagePopup.querySelector('.popup-image__plase-info');
 
       placeImg.src = evt.target.src;  
-      placeInfo.textContent = evt.target.alt;
+      placeImg.alt = evt.target.alt;  
+      placeInfo.textContent = evt.target.alt;   //но у меня есть альты к карточкам. они присваиваются в функции createCard
 
       showPopup(bigImagePopup)
     });
 }
 
 // Открытие первого окна(редактирование профиля)
-editButton.addEventListener('click', ()=> {
+buttonEdit.addEventListener('click', ()=> {
   nameInput.value = profileName.textContent; // подгрузили в поля формы нужное имя
   jobInput.value = profileAbout.textContent; // то же самое для остальной инфы
 
-  showPopup(editProfilePopup);
+  showPopup(popupEditProfile);
 });
 
 // Открытие второго попапа (создание карточек)
-addNewPlaceButton.addEventListener('click', ()=> showPopup(newPlacePopup));
+newPlaceAddButton.addEventListener('click', ()=>  {
+  showPopup(newPlacePopup);
+  newPlaseCreateForm.reset();
+});
 
-editProfileCloseButton.addEventListener('click', ()=> closePopup(editProfilePopup)); // Закрытие первого попапа
+closeButtonEditProfile.addEventListener('click', ()=> closePopup(popupEditProfile)); // Закрытие первого попапа
 
 // Закрытие второго попапа (создание карточек)
 newPlaceCloseButton.addEventListener('click', ()=>{
  closePopup(newPlacePopup);
- createNewPlaseForm.reset();
+ //newPlaseCreateForm.reset();
 });
 
 bigImageCloseButton.addEventListener('click', ()=> closePopup(bigImagePopup)); //закрытие окна с увеличенной картинкой
-editProfileForm.addEventListener('submit', SubmitHandlerEditProfileForm); //при событии "отправка" запускаем функцию редактирования данных
-createNewPlaseForm.addEventListener('submit', createNewPlace); // при событии "отправка" создаем новую карточку
+profileEditForm.addEventListener('submit', submitHandlerEditProfileForm); //при событии "отправка" запускаем функцию редактирования данных
+newPlaseCreateForm.addEventListener('submit', createNewPlace); // при событии "отправка" создаем новую карточку

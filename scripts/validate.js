@@ -17,10 +17,10 @@ const obj = {    //по логике, надо теперь брать кусо�
     errorElement.classList.add(obj.errorClass); 
   }
   //функция, которая отключает стили ошибки
-  const hideItemError = (formElement, inputElement) => {
+  export function hideItemError(formElement, inputElement) {
     const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
-      inputElement.classList.remove(obj.inputErrorClass);        // есть баг. если очстить поле и закрыть попап, то при открытии будет готерь ошибка
-      errorElement.classList.remove(obj.errorClass);   //надо чтобы при закрытии попапа удалялись классы ошибок
+      inputElement.classList.remove(obj.inputErrorClass);  
+      errorElement.classList.remove(obj.errorClass);  
       //очищаем поле ошибки
       errorElement.textContent = "";
   }
@@ -34,11 +34,12 @@ const obj = {    //по логике, надо теперь брать кусо�
     }
   };
 
-   function setEventListeners (formElement) {
+export function setEventListeners (formElement) {
     const inputList = Array.from(formElement.querySelectorAll(obj.inputSelector));
     const saveButton = formElement.querySelector(obj.submitButtonSelector);
-toggleFormBatton(inputList, saveButton);  //хы. срабатывает один раз.  а надо чтобы при каждом открытии...
+    toggleFormBatton(inputList, saveButton);  
     inputList.forEach((inputElement) => {
+      hideItemError(formElement, inputElement);  //тк. функцию вызываем при открытии формы, то сначала прячем ошибки от прошлого взаимодействия с пользователем
       inputElement.addEventListener('input', function() {
         checkInputValidity(formElement, inputElement);
         toggleFormBatton(inputList, saveButton);
@@ -46,20 +47,21 @@ toggleFormBatton(inputList, saveButton);  //хы. срабатывает оди�
     });
   }
 
-
-const hasValidInput = (inputList) => {
+export function hasValidInput(inputList) {
   return inputList.some((inputElement) => {
     return !inputElement.validity.valid;
   })
 }
-const toggleFormBatton = (inputList, saveButton) => {
+export function toggleFormBatton(inputList, saveButton) {
   // Если есть хотя бы один невалидный инпут
   if (hasValidInput(inputList)) {
     // сделай кнопку неактивной
     saveButton.classList.add(obj.inactiveButtonClass);
+    saveButton.setAttribute('disabled', 'disabled');
   } else {
     // иначе сделай кнопку активной
     saveButton.classList.remove(obj.inactiveButtonClass);
+    saveButton.removeAttribute('disabled', 'disabled');
   }
 }; 
 
@@ -67,9 +69,9 @@ const toggleFormBatton = (inputList, saveButton) => {
   function enableValidation(obj) {
     const formList = Array.from(document.querySelectorAll(obj.formSelector));
     formList.forEach((formElement) => {
-      formElement.addEventListener('submit', (evt) => {
-        evt.preventDefault();
-      });
+     /* formElement.addEventListener('submit', (evt) => {  // это нам тут не над
+        evt.preventDefault();          // мы это уже отключили в функции отправки формы
+      });*/
       setEventListeners(formElement);
     })
   }
