@@ -3,7 +3,7 @@ import { setEventListeners } from "./validate.js";
 
 const buttonEdit = document.querySelector('.edit-button'); //кнопка "редактировать"
 const popupEditProfile = document.querySelector('.popup_edit-profile');  //попап редактирования профиля
-const editProfileCloseButton = document.querySelector('.close-button_profile-popup'); //кнопка "закрыть форму редактирования профиля"
+const profileEditCloseButton = document.querySelector('.close-button_profile-popup'); //кнопка "закрыть форму редактирования профиля"
 const newPlacePopup = document.querySelector('.popup_new-place'); //попап создания карточек
 const newPlaceCloseButton = document.querySelector('.close-button_new-card-popup'); //кнопка "закрыть форму создания карточек"
 const bigImagePopup = document.querySelector('.popup_big-image'); //попап с большой картинкой
@@ -30,8 +30,6 @@ const placeLinkInput = document.querySelector('.form__item_content_place-image')
 const newPlaceAddButton = document.querySelector('.add-button');  // Это кнопка добавления нового места
 
 
-
-
 // общая функция для закрытия через Esc
 function closeWithEscape (evt) {
   if (evt.key ==='Escape') {
@@ -44,7 +42,6 @@ function closeWithEscape (evt) {
 function closeClickOnOverlay(evt) {
   if (evt.target === evt.currentTarget) {
     closePopup(evt.target);
-
   }
 };
 
@@ -91,9 +88,9 @@ function addCard(item) {
 }
 
 // переворачиваем массив
-const reverseinitialCards = initialCards.reverse();
+const initialCardsReverse = initialCards.reverse();
 // "пролистываем" его, вызывая для каждого элемента функцию создания сарточки и вывода ее на экран
-reverseinitialCards.forEach(addCard);
+initialCardsReverse.forEach(addCard);
 
 // отправка формы для создания новой карточки
 function createNewPlace (evt) {
@@ -150,7 +147,7 @@ newPlaceAddButton.addEventListener('click', ()=>  {
   setEventListeners(newPlacePopup); // очищаем ошибки и актуализируем состояние кнопки для КОНКРЕТНОГО попапа
 });
 
-editProfileCloseButton.addEventListener('click', ()=> closePopup(popupEditProfile)); // Закрытие первого попапа
+profileEditCloseButton.addEventListener('click', ()=> closePopup(popupEditProfile)); // Закрытие первого попапа
 
 // Закрытие второго попапа (создание карточек)
 newPlaceCloseButton.addEventListener('click', ()=> closePopup(newPlacePopup));
