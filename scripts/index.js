@@ -1,6 +1,6 @@
-
-import { setEventListeners } from "./validate.js";
-
+import { obj, PlaceFormValid, ProfileFormValid} from "./validate.js";
+import { Card, initialCards} from "./cards.js";
+//import { setEventListeners } from "./validate.js";
 const buttonEdit = document.querySelector('.edit-button'); //кнопка "редактировать"
 const popupEditProfile = document.querySelector('.popup_edit-profile');  //попап редактирования профиля
 const profileEditCloseButton = document.querySelector('.close-button_profile-popup'); //кнопка "закрыть форму редактирования профиля"
@@ -28,6 +28,19 @@ const placeNameInput = document.querySelector('.form__item_content_place-name');
 const placeLinkInput = document.querySelector('.form__item_content_place-image');// поле формы для создания нового места (картинка)
 
 const newPlaceAddButton = document.querySelector('.add-button');  // Это кнопка добавления нового места
+
+const profileFormValid = new ProfileFormValid(obj, profileEditForm);
+const newPlaceValid = new PlaceFormValid(obj, newPlaceCreateForm);
+const someCard = new Card();
+
+
+// переворачиваем массив
+const initialCardsReverse = initialCards.reverse();
+// "пролистываем" его, вызывая для каждого элемента переменную, которая создает объект класса Card
+initialCardsReverse.forEach((item) => {
+  someCard.render(elements, item);
+});
+
 
 
 // общая функция для закрытия через Esc
@@ -67,30 +80,7 @@ function submitHandlerEditProfileForm (evt) {
   closePopup(popupEditProfile); // вызвали функцию закрытия формы
 }
 
-// Функция, кторая делает карточки
-function createCard(item) {
-  const card = cardTemplate.cloneNode(true);
-  const text = card.querySelector('.element__text');
-  const image = card.querySelector('.element__photo');
 
-  text.textContent = item.name;
-  image.src = item.link;
-  image.alt = item.name;
-  setCardListeners(card);
-
-  return card;
-};
-
-// функция, которая также навешивает слушатели и выводит на страницу карточки
-function addCard(item) {
-  const card = createCard(item);
-  elements.prepend(card);
-}
-
-// переворачиваем массив
-const initialCardsReverse = initialCards.reverse();
-// "пролистываем" его, вызывая для каждого элемента функцию создания сарточки и вывода ее на экран
-initialCardsReverse.forEach(addCard);
 
 // отправка формы для создания новой карточки
 function createNewPlace (evt) {
@@ -100,51 +90,48 @@ function createNewPlace (evt) {
   const link = placeLinkInput.value; // забираем из поля формы адрес картинки
 
   const newPlase = {name, link}; //создаем массив
-  addCard(newPlase);
-// newPlaseCreateForm.reset(); // тут можно не очищать. мы чистим при открытии формы
+  //вызываем метод объекта класса Card который отрисует нам новую карточку
+  someCard.render(elements, newPlase);
   closePopup(newPlacePopup); // вызвали функцию закрытия этой формы
 }
 
-// это функция с кнопочками на карточках
-function setCardListeners (element) {
-// функция любви. отвечает за лайки
-  element.querySelector('.like').addEventListener('click', function (evt) {
-    evt.target.classList.toggle('like_active');
-  });
-
-// функция, которая удаляет карточки
-  element.querySelector('.trash-button').addEventListener('click', function(evt) {
-    element.remove();
-  });
-
 // функция place-попап
-  element
+
+someCard._view// БОЛЬШЕ НЕ РАБОТАЕТ.ТК ВЫЗЫВАТЬ НАДО ДРУГУЮ ШТУКУ
     .querySelector('.element__photo')
-    .addEventListener('click', function(evt) {
+    .addEventListener('click', (evt)=> {
+      console.log("я есть")
+
       const placeImg= bigImagePopup.querySelector('.popup-image__image');
       const placeInfo= bigImagePopup.querySelector('.popup-image__place-info');
 
-      placeImg.src = evt.target.src;  
-      placeImg.alt = evt.target.alt;  
-      placeInfo.textContent = evt.target.alt; 
+      placeImg.src = evt.target.src;
+      placeImg.alt = evt.target.alt;
+      placeInfo.textContent = evt.target.alt;
 
       showPopup(bigImagePopup)
     });
-}
+
 
 // Открытие первого окна(редактирование профиля)
 buttonEdit.addEventListener('click', ()=> {
   nameInput.value = profileName.textContent; // подгрузили в поля формы нужное имя
   jobInput.value = profileAbout.textContent;
   showPopup(popupEditProfile);
-  setEventListeners(popupEditProfile); // очищаем ошибки и актуализируем состояние кнопки для КОНКРЕТНОГО попапа
+
+//запустили валидацию
+  profileFormValid.enableValidation(profileEditForm);
+  //setEventListeners(popupEditProfile); // очищаем ошибки и актуализируем состояние кнопки для КОНКРЕТНОГО попапа
 });
 
 // Открытие второго попапа (создание карточек)
 newPlaceAddButton.addEventListener('click', ()=>  {
   showPopup(newPlacePopup);
   newPlaceCreateForm.reset();
-  setEventListeners(newPlacePopup); // очищаем ошибки и актуализируем состояние кнопки для КОНКРЕТНОГО попапа
+
+//запустили валидацию
+  newPlaceValid.enableValidation(newPlaceCreateForm);
+  //setEventListeners(newPlacePopup); // очищаем ошибки и актуализируем состояние кнопки для КОНКРЕТНОГО попапа
 });
 
 profileEditCloseButton.addEventListener('click', ()=> closePopup(popupEditProfile)); // Закрытие первого попапа

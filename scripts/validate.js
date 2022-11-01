@@ -1,4 +1,4 @@
-const obj = {    //по логике, надо теперь брать кусочки отсюда и с ними
+ export const obj = {    //по логике, надо теперь брать кусочки отсюда и с ними
   formSelector: '.form',    //form
   inputSelector: '.form__item',   //form__item
   submitButtonSelector: '.save-button',   //у меня ткого вообще нема
@@ -7,73 +7,108 @@ const obj = {    //по логике, надо теперь брать кусо�
   errorClass: 'form__item-error_visible'   //form__item-error-visible?
 }
 
-  //нужна функция, которая подключает стили ошибки
-  const showItemError = (formElement, inputElement, errorMessage) => {
-    const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
-    inputElement.classList.add(obj.inputErrorClass);    
-    //изменяяем текст ошибки
-    errorElement.textContent = errorMessage;
-    //сообщение об ошибке
-    errorElement.classList.add(obj.errorClass); 
+//общий класс валидации. у него будет двое детей
+class FormValidator {
+  constructor(obj){
+  this.formSelector = obj.formSelector;
+  this.inputSelector = obj.inputSelector;
+  this.submitButtonSelector = obj.submitButtonSelector;
+  this.inactiveButtonClass = obj.inactiveButtonClass;
+  this.inputErrorClass = obj.inputErrorClass;
+  this.errorClass = obj.errorClass;
   }
-  //функция, которая отключает стили ошибки
-  export function hideItemError(formElement, inputElement) {
-    const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
-      inputElement.classList.remove(obj.inputErrorClass);  
-      errorElement.classList.remove(obj.errorClass);  
-      //очищаем поле ошибки
-      errorElement.textContent = "";
-  }
-  //нужна функция которая проверяет валидность поля и вызывает функцию с ошибкой
-  const checkInputValidity = (formElement, inputElement) => {
-    if (!inputElement.validity.valid) {
-      // Передадим сообщение об ошибке вторым аргументом
-      showItemError(formElement, inputElement, inputElement.validationMessage);
-    } else {
-      hideItemError(formElement, inputElement);
-    }
-  };
 
-export function setEventListeners (formElement) {
-    const inputList = Array.from(formElement.querySelectorAll(obj.inputSelector));
-    const saveButton = formElement.querySelector(obj.submitButtonSelector);
-    toggleFormBatton(inputList, saveButton);  
+  enableValidation() {
+    this._setEventListeners();
+  }
+  _setEventListeners () {
+    //console.log("setEventListeners включилась!")
+    const inputList = Array.from(this.formSelector.querySelectorAll(this.inputSelector));
+    const saveButton = this.formSelector.querySelector(this.submitButtonSelector);
+    this._toggleFormBatton(inputList, saveButton);
     inputList.forEach((inputElement) => {
-      hideItemError(formElement, inputElement);  //тк. функцию вызываем при открытии формы, то сначала прячем ошибки от прошлого взаимодействия с пользователем
-      inputElement.addEventListener('input', function() {
-        checkInputValidity(formElement, inputElement);
-        toggleFormBatton(inputList, saveButton);
+      this._hideItemError(inputElement);
+      inputElement.addEventListener('input', ()=> {
+      this._checkInputValidity(inputElement);
+      this._toggleFormBatton(inputList, saveButton);
       });
     });
   }
 
-export function hasValidInput(inputList) {
-  return inputList.some((inputElement) => {
-    return !inputElement.validity.valid;
-  })
-}
-export function toggleFormBatton(inputList, saveButton) {
-  // Если есть хотя бы один невалидный инпут
-  if (hasValidInput(inputList)) {
-    // сделай кнопку неактивной
-    saveButton.classList.add(obj.inactiveButtonClass);
-    saveButton.setAttribute('disabled', 'disabled');
-  } else {
-    // иначе сделай кнопку активной
-    saveButton.classList.remove(obj.inactiveButtonClass);
-    saveButton.removeAttribute('disabled', 'disabled');
+ _hideItemError(inputElement) {
+  //console.log("hideItemError включилась!")
+    const errorElement = this.formSelector.querySelector(`.${inputElement.id}-error`);
+      inputElement.classList.remove(this.inputErrorClass);
+      errorElement.classList.remove(this.errorClass);
+      //очищаем поле ошибки
+      errorElement.textContent = "";
   }
-}; 
 
-  // чего с этим объектом делать, вообще не понтяно
-  function enableValidation(obj) {
-    const formList = Array.from(document.querySelectorAll(obj.formSelector));
-    formList.forEach((formElement) => {
-     /* formElement.addEventListener('submit', (evt) => {  // это нам тут не над
-        evt.preventDefault();          // мы это уже отключили в функции отправки формы
-      });*/
-      setEventListeners(formElement);
+  _showItemError = (inputElement, errorMessage) => {
+    //console.log("showItemError включилась!")
+    const errorElement = this.formSelector.querySelector(`.${inputElement.id}-error`);
+    inputElement.classList.add(this.inputErrorClass);
+    //изменяяем текст ошибки
+    errorElement.textContent = errorMessage;
+    //сообщение об ошибке
+    errorElement.classList.add(this.errorClass);
+  }
+
+ _checkInputValidity = (inputElement) => {
+  //console.log("checkInputValidity включилась!")
+    if (!inputElement.validity.valid) {
+      // Передадим сообщение об ошибке вторым аргументом
+      this._showItemError(inputElement, inputElement.validationMessage);
+    } else {
+      this._hideItemError(inputElement);
+    }
+  }
+
+  _hasValidInput(inputList) {
+    //console.log("hasValidInput включилась!")
+    return inputList.some((inputElement) => {
+      return !inputElement.validity.valid;
     })
   }
 
-enableValidation(obj);
+  _toggleFormBatton(inputList, saveButton) {
+    //console.log("toggleFormBatton включилась!")
+    // Если есть хотя бы один невалидный инпут
+    if (this._hasValidInput(inputList)) {
+      // сделай кнопку неактивной
+      saveButton.classList.add(this.inactiveButtonClass);
+      saveButton.setAttribute('disabled', 'disabled');
+    } else {
+      // иначе сделай кнопку активной
+      saveButton.classList.remove(this.inactiveButtonClass);
+      saveButton.removeAttribute('disabled', 'disabled');
+    }
+  }
+  }
+
+  //экземпляр класса для формы создания карточек
+ export class PlaceFormValid extends FormValidator {
+  constructor(obj, form) {
+    // ключевым словом super вызываем конструктор родительского
+    super(obj);
+    //добавим нужную нам форму (ее передали из index.js)
+    this.formSelector = form;
+}
+  enableValidation() {
+    //все работает одинаково, так что запускаем метод родительского класса
+    super._setEventListeners();
+  }
+}
+
+  //экземпляр класса для формы редактирования профиля
+ export class ProfileFormValid extends FormValidator {
+  constructor(obj, form) {
+    // ключевым словом super вызываем конструктор родительского
+    super(obj);
+    this.formSelector = form;
+  }
+  enableValidation() {
+    super._setEventListeners();
+
+  }
+}
