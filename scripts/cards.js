@@ -1,64 +1,43 @@
+import { showPopup } from "./index.js";
 
-
-export const initialCards = [
-  {
-    name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-  },
-  {
-    name: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-  },
-  {
-    name: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-  },
-  {
-    name: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-  },
-  {
-    name: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-  },
-  {
-    name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
+export default class Card {
+  constructor(item, templateSelector) {
+    this._name = item.name;
+    this._link = item.link;
+    this._templateSelector = templateSelector;
   }
-];
 
-export class Card {
-  constructor(name, link) {
-    this.name = name;
-    this.link = link;
-  }
   //этот метод делает пустой блок с болванки
   _getTemplate() {
-    const createCard = document.querySelector('#template-card')
+    const createCard = document.querySelector(this._templateSelector)
     .content
-    .querySelector('.element').cloneNode(true)
+    .querySelector('.element')
+    .cloneNode(true)
 
     return(createCard);
   }
+
   // этот метод отрисовывает блок и убирает в него данные
-  render(container, item) {
+  render(item) {
   this._view = this._getTemplate();
 
-  this.name = this._view.querySelector('.element__text').textContent = item.name; //мы пока сюда ничего не дали, а надо передать элементы массива
-  this.image = this._view.querySelector('.element__photo').src = item.link;
-  this.alt = this._view.querySelector('.element__photo').alt = item.name;
+ this._view.querySelector('.element__text').textContent = item.name;
+ this._view.querySelector('.element__photo').src = item.link;
+ this._view.querySelector('.element__photo').alt = item.name;
 
   //вызывает метод, который повесит слушатели на создаваемую карточку
-  this._setEventListeners(container);
-  container.prepend(this._view);
+  this._setEventListeners();
+
+  return (this._view);
   }
 
   //вешает слушатели на карточки
   _setEventListeners() {
     this._like();
     this._trash();
-
+    this._show();
   }
+
   // метод для лайков
   _like() {
     this._view.querySelector('.like').addEventListener('click', function(evt) {
@@ -73,5 +52,15 @@ export class Card {
     });
   }
 
-}
+  _show() {
+    const imageToClick = this._view.querySelector('.element__photo');
+    imageToClick.addEventListener('click', () => {
+
+      const bigImagePopup = document.querySelector('.popup_big-image');
+      document.querySelector('.popup-image__image').src = this._link;
+      document.querySelector('.popup-image__place-info').textContent = this._name;
+      showPopup(bigImagePopup);
+    });
+  }
+  }
 

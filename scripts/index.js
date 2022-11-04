@@ -1,6 +1,8 @@
 import { obj, PlaceFormValid, ProfileFormValid} from "./validate.js";
-import { Card, initialCards} from "./cards.js";
-//import { setEventListeners } from "./validate.js";
+import  Card from "./cards.js";
+import { initialCards } from "./initialCards.js";
+export {showPopup};
+
 const buttonEdit = document.querySelector('.edit-button'); //кнопка "редактировать"
 const popupEditProfile = document.querySelector('.popup_edit-profile');  //попап редактирования профиля
 const profileEditCloseButton = document.querySelector('.close-button_profile-popup'); //кнопка "закрыть форму редактирования профиля"
@@ -8,22 +10,13 @@ const newPlacePopup = document.querySelector('.popup_new-place'); //попап �
 const newPlaceCloseButton = document.querySelector('.close-button_new-card-popup'); //кнопка "закрыть форму создания карточек"
 const bigImagePopup = document.querySelector('.popup_big-image'); //попап с большой картинкой
 const bigImageCloseButton = document.querySelector('.close-button_big-image-popup'); //кнопка "закрыть большую картинку"
-
 const elements = document.querySelector('.elements');
-
 const profileName = document.querySelector('.profile__name'); //вот переменная, куда загрузим имя
 const profileAbout = document.querySelector('.profile__about'); // вот сюда мы загрудим остальную инфу
-
 const profileEditForm = popupEditProfile.querySelector('.form');  //вот переменная с формой
 const newPlaceCreateForm = newPlacePopup.querySelector('.form');
-
 const nameInput = profileEditForm.querySelector('.form__item_content_name'); //поле формы с именем
 const jobInput = profileEditForm.querySelector('.form__item_content_about'); //поле формы с доп инфой
-
-const cardTemplate = document
-  .querySelector('#template-card')
-  .content.querySelector('.element'); //болванка для карточек
-
 const placeNameInput = document.querySelector('.form__item_content_place-name'); //поле формы для создания нового места (название)
 const placeLinkInput = document.querySelector('.form__item_content_place-image');// поле формы для создания нового места (картинка)
 
@@ -31,17 +24,19 @@ const newPlaceAddButton = document.querySelector('.add-button');  // Это кн
 
 const profileFormValid = new ProfileFormValid(obj, profileEditForm);
 const newPlaceValid = new PlaceFormValid(obj, newPlaceCreateForm);
-const someCard = new Card();
 
-
+//функция, которая делает карточки, создавая объект класса Card
+function createCard(item) {
+  const someCard = new Card(item, '#template-card');
+  const cardElement = someCard.render(item);
+  elements.prepend(cardElement);
+}
 // переворачиваем массив
 const initialCardsReverse = initialCards.reverse();
 // "пролистываем" его, вызывая для каждого элемента переменную, которая создает объект класса Card
 initialCardsReverse.forEach((item) => {
-  someCard.render(elements, item);
+  createCard(item);
 });
-
-
 
 // общая функция для закрытия через Esc
 function closeWithEscape (evt) {
@@ -91,13 +86,13 @@ function createNewPlace (evt) {
 
   const newPlase = {name, link}; //создаем массив
   //вызываем метод объекта класса Card который отрисует нам новую карточку
-  someCard.render(elements, newPlase);
+  createCard(newPlase);
   closePopup(newPlacePopup); // вызвали функцию закрытия этой формы
 }
 
 // функция place-попап
 
-someCard._view// БОЛЬШЕ НЕ РАБОТАЕТ.ТК ВЫЗЫВАТЬ НАДО ДРУГУЮ ШТУКУ
+/*someCard._view// БОЛЬШЕ НЕ РАБОТАЕТ.ТК ВЫЗЫВАТЬ НАДО ДРУГУЮ ШТУКУ
     .querySelector('.element__photo')
     .addEventListener('click', (evt)=> {
       console.log("я есть")
@@ -111,7 +106,7 @@ someCard._view// БОЛЬШЕ НЕ РАБОТАЕТ.ТК ВЫЗЫВАТЬ НАД
 
       showPopup(bigImagePopup)
     });
-
+*/
 
 // Открытие первого окна(редактирование профиля)
 buttonEdit.addEventListener('click', ()=> {
