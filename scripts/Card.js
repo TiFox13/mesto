@@ -5,10 +5,11 @@ import {bigImagePopup,
   } from "./utils/utils.js"
 
 export default class Card {
-  constructor(item, templateSelector) {
+  constructor(item, templateSelector, handleCardClick) {
     this._name = item.name;
     this._link = item.link;
     this._templateSelector = templateSelector;
+    this._handleCardClick = handleCardClick;
   }
 
   //этот метод делает пустой блок с болванки
@@ -38,7 +39,8 @@ export default class Card {
   _setEventListeners() {
     this._like();
     this._trash();
-    this._show();
+    this._show(); //вероятно где-то здесь нужно вызывать попап через метод handleCardClick. картинка,
+    //текст и альт в попапе вставляются, а не класее карточек
   }
 
   // метод для лайков
@@ -55,13 +57,14 @@ export default class Card {
     });
   }
 
-  _show() {
+  _show() {  //теперь это надо делать не тут, а в классе попапа с картиночкой! в методе открытия
     const imageToClick = this._view.querySelector('.element__photo');
     imageToClick.addEventListener('click', () => {
 
       bigImage.src = this._link;
       bigImageName.textContent = this._name;
       showPopup(bigImagePopup);
+
     });
   }
   }
