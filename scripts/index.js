@@ -9,6 +9,7 @@ import {bigImagePopup,
         showPopup,
         closePopup,
         } from "./utils/utils.js"
+import UserInfo from "./UserInfo.js";
 
 const buttonEdit = document.querySelector('.edit-button'); //кнопка "редактировать"
 const popupEditProfile = document.querySelector('.popup_edit-profile');  //попап редактирования профиля
@@ -35,10 +36,12 @@ const initialCardsReverse = initialCards.reverse();
 
 const profileFormValid = new FormValidator(validationConfig, profileEditForm);
 const newPlaceValid = new FormValidator(validationConfig, newPlaceCreateForm);
-const section = new Section({items: initialCardsReverse, renderer: createCard}, ".elements")
+const section = new Section({items: initialCardsReverse, renderer: createCard}, ".elements");
+const user = new UserInfo( {userName:'.profile__name', userAbout: '.profile__about'})
 
 const imagePopup = new PopupWithImage('.popup_big-image');
 const formNewPlacePopup = new PopupWithForm('.popup_new-place', createNewPlace);
+const formEditProfilePopup = new PopupWithForm('.popup_edit-profile', submitHandlerEditProfileForm)
 //запустили валидацию
 profileFormValid.enableValidation(profileEditForm);
   newPlaceValid.enableValidation(newPlaceCreateForm);
@@ -56,9 +59,6 @@ export function createCard(item) {
 function addCard(el) {
   elements.prepend(el);
 }
-
-
-
 // "пролистываем" его, вызывая для каждого элемента переменную, которая создает объект класса Card
 initialCardsReverse.forEach((item) => {
   addCard(createCard(item));
@@ -76,38 +76,40 @@ function handleCardClick(link, name) {
   });
 
 }
-
+const userInfo ={name: nameInput, about: jobInput};
 // функция сохранения изменений в форме
 function submitHandlerEditProfileForm (evt) {
-  evt.preventDefault(); //отключили стандартную отправку формы
-  profileName.textContent = nameInput.value; // сказали "запиши мне в ProfileName содержимое поля с именем"
-  profileAbout.textContent = jobInput.value; // то же самое для остальной инфы
-  closePopup(popupEditProfile); // вызвали функцию закрытия формы
+  //evt.preventDefault(); //отключили стандартную отправку формы
+  user.setUserInfo(userInfo);
+ // profileName.textContent = nameInput.value; // сказали "запиши мне в ProfileName содержимое поля с именем"
+  //profileAbout.textContent = jobInput.value; // то же самое для остальной инфы
+  formEditProfilePopup.close(); // вызвали функцию закрытия формы
 }
-
-
 
 // отправка формы для создания новой карточки
 function createNewPlace (evt) {
-  evt.preventDefault(); //отключили стандартную отправку формы
-
+ // console.log(this._formInputValues)
+ // evt.preventDefault(); //отключили стандартную отправку формы
   const name = placeNameInput.value;  //забираем из поля формы название
-  const link = placeLinkInput.value; // забираем из поля формы адрес картинки
+ const link = placeLinkInput.value; // забираем из поля формы адрес картинки
 
   const newPlase = {name, link}; //создаем массив
   //вызываем метод объекта класса Card который отрисует нам новую карточку
   section.render(newPlase);
   formNewPlacePopup.close()
-  closePopup(newPlacePopup); // вызвали функцию закрытия этой формы
+   // вызвали функцию закрытия этой формы
 }
 
 
 
 // Открытие первого окна(редактирование профиля)
 buttonEdit.addEventListener('click', ()=> {
-  nameInput.value = profileName.textContent; // подгрузили в поля формы нужное имя
-  jobInput.value = profileAbout.textContent;
-  showPopup(popupEditProfile);
+  user.setUserInfoValues(userInfo);
+  //nameInput.value = profileName.textContent; // подгрузили в поля формы нужное имя
+  //jobInput.value = profileAbout.textContent;
+
+  formEditProfilePopup.open()
+  //showPopup(popupEditProfile);
 
 //спрятали ошибки
 profileFormValid.resetValidation();
@@ -122,11 +124,11 @@ newPlaceAddButton.addEventListener('click', ()=>  {
   newPlaceValid.resetValidation();
 });
 
-profileEditCloseButton.addEventListener('click', ()=> closePopup(popupEditProfile)); // Закрытие первого попапа
+//profileEditCloseButton.addEventListener('click', ()=> closePopup(popupEditProfile)); // Закрытие первого попапа
 
 // Закрытие второго попапа (создание карточек)
-newPlaceCloseButton.addEventListener('click', ()=> closePopup(newPlacePopup));
+//newPlaceCloseButton.addEventListener('click', ()=> closePopup(newPlacePopup));
 
 //bigImageCloseButton.addEventListener('click', ()=> closePopup(bigImagePopup)); //закрытие окна с увеличенной картинкой
-profileEditForm.addEventListener('submit', submitHandlerEditProfileForm); //при событии "отправка" запускаем функцию редактирования данных
-newPlaceCreateForm.addEventListener('submit', createNewPlace); // при событии "отправка" создаем новую карточку
+//profileEditForm.addEventListener('submit', submitHandlerEditProfileForm); //при событии "отправка" запускаем функцию редактирования данных
+//newPlaceCreateForm.addEventListener('submit', createNewPlace); // при событии "отправка" создаем новую карточку

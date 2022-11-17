@@ -8,7 +8,7 @@ class Popup {
   open() {
    // console.log('я работаю');
     this.popup.classList.add('popup_opened');
-    this.setEventListeners; 
+    this.setEventListeners(); 
   }
 
   close() {
@@ -20,11 +20,10 @@ class Popup {
     //console.log('сработала штука');
     if (evt.key ==='Escape') {
      // console.log('а конструкция if?');
-  
       this.close();
   }
   }
-  // общая функция закрытия через клик вне области попапа
+  // метод закрытия через клик вне области попапа
 _handleOverlayClose(evt) {
   //console.log('сработала вторая штука');
   if (evt.target === evt.currentTarget) {
@@ -43,10 +42,9 @@ _handleOverlayClose(evt) {
 
 export default class PopupWithImage extends Popup {
   constructor(popupSelector){
-    super(popupSelector);//не помню, как правильно писать, надо читать теорию
+    super(popupSelector);
     this._image = this.popup.querySelector('.popup-image__image');
     this._text = this.popup.querySelector('.popup-image__place-info');
-
   }
 
   open(link, name) { 
@@ -58,42 +56,49 @@ export default class PopupWithImage extends Popup {
     this._text.textContent = name;
 //нужно вставлять картинку и подпись здесь  НО ПОКА НИЧЕГО НЕ СТАВИТСЯ, ТОЛЬКО ОТКРЫВАЕТСЯ И ЗАКРЫВАЕТСЯ
   }
-
-
 }
 
 
 
 export  class PopupWithForm extends Popup {
-  constructor(popupSelector, call) {
+  constructor(popupSelector, handleSubmit) {
     super(popupSelector),
-    this.call = call
+    this.handleSubmit = handleSubmit,
     //должен принимать еще колбек сабмита формы
-    this.form = this.popup.querySelector('.form');
+    this.form = this.popup.querySelector('.form'),
+    this._inputList = Array.from(this.form.querySelectorAll('.input'));
   }
 
   _getInputValues() {
-    //который собирает данные всех полей формы.
-    
-  const name = placeNameInput.value;  //забираем из поля формы название
-  const link = placeLinkInput.value; // забираем из поля формы адрес картинки
-  
-  const newPlase = {name, link}; //создаем массив
-
+    this._formInputValues = {};
+    this._inputList. forEach(input =>{
+      this._formInputValues[item]=input.value;
+    });
+    return(this._formInputValues);
+    //который собирает данные всех полей формы. 
+  //const name = placeNameInput.value;  //забираем из поля формы название
+  //const link = placeLinkInput.value; // забираем из поля формы адрес картинки
+  //const info = {name, link}; //создаем массив
+  //  return(info);
   }
 
   setEventListeners() {
     super.setEventListeners();
+    this.form.addEventListener('submit', ((evt) => {
+      evt.preventDefault();
+      this._getInputValues();
+
+    this.handleSubmit()
+    }))
     //но и добавлять обработчик сабмита формы.
-   this._image.addEventListener('click', () =>{
-    this._handleEscClose(this._name, this._link)
-   })
-    //this.call
   }
 
+  
+
   close() {
+    console.log('закрытие отработало!')
     super.close();
-    this.form.reset()
+   this.form.reset()
     //при закрытии попапа форма должна ещё и сбрасываться.
   }
 }
