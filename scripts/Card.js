@@ -39,7 +39,7 @@ export default class Card {
   _setEventListeners() {
     this._like();
     this._trash();
-    this._show(); //вероятно где-то здесь нужно вызывать попап через метод handleCardClick. картинка,
+    this._handleCardClick(this._link, this._name); //вероятно где-то здесь нужно вызывать попап через метод handleCardClick. картинка,
     //текст и альт в попапе вставляются, а не класее карточек
   }
 
@@ -56,7 +56,7 @@ export default class Card {
        evt.target.closest(".element").remove();
     });
   }
-
+/*
   _show() {  //теперь это надо делать не тут, а в классе попапа с картиночкой! в методе открытия
     const imageToClick = this._view.querySelector('.element__photo');
     imageToClick.addEventListener('click', () => {
@@ -68,4 +68,5 @@ export default class Card {
     });
   }
   }
-
+*/
+}

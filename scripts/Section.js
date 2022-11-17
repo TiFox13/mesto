@@ -1,5 +1,4 @@
-//У класса `Section` нет своей разметки. Он получает разметку через функцию-колбэк и вставляет её в контейнер.
-//import { createCard } from "./index";
+
 export default class Section {
   constructor({items, renderer}, containerSelector) {
     this.items =items;

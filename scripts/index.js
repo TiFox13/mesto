@@ -1,6 +1,8 @@
 import  FormValidator from "./FormValidator.js";
 import  Card from "./Card.js";
 import Section from "./Section.js";
+import PopupWithImage from "./Popup.js";
+import {PopupWithForm} from "./Popup.js"
 import { validationConfig} from "./utils/constants.js";
 import { initialCards } from "./initialCards.js";
 import {bigImagePopup,
@@ -34,6 +36,9 @@ const initialCardsReverse = initialCards.reverse();
 const profileFormValid = new FormValidator(validationConfig, profileEditForm);
 const newPlaceValid = new FormValidator(validationConfig, newPlaceCreateForm);
 const section = new Section({items: initialCardsReverse, renderer: createCard}, ".elements")
+
+const imagePopup = new PopupWithImage('.popup_big-image');
+const formNewPlacePopup = new PopupWithForm('.popup_new-place', createNewPlace);
 //запустили валидацию
 profileFormValid.enableValidation(profileEditForm);
   newPlaceValid.enableValidation(newPlaceCreateForm);
@@ -42,7 +47,7 @@ section.startRender();
 
 //функция, которая делает карточки, создавая объект класса Card
 export function createCard(item) {
-  const card = new Card(item, '#template-card');
+  const card = new Card(item, '#template-card',  handleCardClick);
   const cardElement = card.render();
   return(cardElement);
 }
@@ -60,6 +65,17 @@ initialCardsReverse.forEach((item) => {
 });
 */
 
+//должна вызывать попап при клике на карточку ( передается в Card)
+function handleCardClick(link, name) {
+  const imageToClick = this._view.querySelector('.element__photo');
+  imageToClick.addEventListener('click', () => {
+   //const placeName = evt.target.alt;
+  // console.log('ну кликнул ты')
+   //const link = evt.target.src;
+    imagePopup.open(link, name);
+  });
+
+}
 
 // функция сохранения изменений в форме
 function submitHandlerEditProfileForm (evt) {
@@ -68,6 +84,8 @@ function submitHandlerEditProfileForm (evt) {
   profileAbout.textContent = jobInput.value; // то же самое для остальной инфы
   closePopup(popupEditProfile); // вызвали функцию закрытия формы
 }
+
+
 
 // отправка формы для создания новой карточки
 function createNewPlace (evt) {
@@ -79,8 +97,11 @@ function createNewPlace (evt) {
   const newPlase = {name, link}; //создаем массив
   //вызываем метод объекта класса Card который отрисует нам новую карточку
   section.render(newPlase);
+  formNewPlacePopup.close()
   closePopup(newPlacePopup); // вызвали функцию закрытия этой формы
 }
+
+
 
 // Открытие первого окна(редактирование профиля)
 buttonEdit.addEventListener('click', ()=> {
@@ -94,8 +115,8 @@ profileFormValid.resetValidation();
 
 // Открытие второго попапа (создание карточек)
 newPlaceAddButton.addEventListener('click', ()=>  {
-  showPopup(newPlacePopup);
-  newPlaceCreateForm.reset();
+  formNewPlacePopup.open()
+  //newPlaceCreateForm.reset();
 
 // спрятали ошибки
   newPlaceValid.resetValidation();
@@ -106,6 +127,6 @@ profileEditCloseButton.addEventListener('click', ()=> closePopup(popupEditProfil
 // Закрытие второго попапа (создание карточек)
 newPlaceCloseButton.addEventListener('click', ()=> closePopup(newPlacePopup));
 
-bigImageCloseButton.addEventListener('click', ()=> closePopup(bigImagePopup)); //закрытие окна с увеличенной картинкой
+//bigImageCloseButton.addEventListener('click', ()=> closePopup(bigImagePopup)); //закрытие окна с увеличенной картинкой
 profileEditForm.addEventListener('submit', submitHandlerEditProfileForm); //при событии "отправка" запускаем функцию редактирования данных
 newPlaceCreateForm.addEventListener('submit', createNewPlace); // при событии "отправка" создаем новую карточку

@@ -1,81 +1,99 @@
+
 class Popup {
   constructor(popupSelector){
-    this.popupSelector = popupSelector;
-    this.closeButton = popupSelector.querySelector('.close-button') //нашли кнопку закрытия именно этого попапа
+    this.popup = document.querySelector(popupSelector);
+    this.closeButton = this.popup.querySelector('.close-button') //нашли кнопку закрытия именно этого попапа
   }
 
   open() {
-    el.classList.add('popup_opened');
-    el._setEventListeners();
+   // console.log('я работаю');
+    this.popup.classList.add('popup_opened');
+    this.setEventListeners; 
   }
 
   close() {
-  el.classList.remove('popup_opened');
+  this.popup.classList.remove('popup_opened');
   }
 
 //содержит логику закрытия попапа клавишей Esc
-  _handleEscClose() {
+  _handleEscClose(evt) {
+    //console.log('сработала штука');
     if (evt.key ==='Escape') {
-      const popupOpened = document.querySelector('.popup_opened');
-      closePopup(popupOpened);
+     // console.log('а конструкция if?');
+  
+      this.close();
   }
   }
-
-  _setEventListeners() {
-    this.closeButton.addEventListener('click', this.close())  //слушатель клика иконке закрытия попапа?
-
-    window.addEventListener('keydown', this._handleEscClose()); //вешаем слушатель для клика по ESC?
- //По идее надо еще закрытие по клику вне области попапа?
-  //el.addEventListener('mousedown', closeClickOnOverlay); // вешаем слушатель для клика по оверлею
+  // общая функция закрытия через клик вне области попапа
+_handleOverlayClose(evt) {
+  //console.log('сработала вторая штука');
+  if (evt.target === evt.currentTarget) {
+    this.close();
   }
+};
 
-
+  setEventListeners() {
+    //console.log("листенер на связи!");
+    this.closeButton.addEventListener('click',() => this.close());  //слушатель клика иконке закрытия попапа?
+    document.addEventListener('keydown', (evt) => this._handleEscClose(evt)); //вешаем слушатель для клика по ESC?
+    this.popup.addEventListener('mousedown', (evt) => this._handleOverlayClose(evt)); // вешаем слушатель для клика по оверлею
+  }
 }
 
 
-
-
-
-/*
-class PopupWithImage extends Popup {
-  constructor(){
+export default class PopupWithImage extends Popup {
+  constructor(popupSelector){
     super(popupSelector);//не помню, как правильно писать, надо читать теорию
+    this._image = this.popup.querySelector('.popup-image__image');
+    this._text = this.popup.querySelector('.popup-image__place-info');
+
   }
 
-  open() {
-    super(open) {
-      //ВОТ ТУТЬ! нужно вставлять в попап картинку и атрибут src изображения.
-      /* const imageToClick = this._view.querySelector('.element__photo');
-    imageToClick.addEventListener('click', () => {
-
-      bigImage.src = this._link;
-      bigImageName.textContent = this._name;
-      super(open);
-    }
+  open(link, name) { 
+   // console.log('jnrhsnbt gjgfg');
+    super.open();
+    super.setEventListeners();
+    this._image.src = link;
+    this._image.alt = name;
+    this._text.textContent = name;
+//нужно вставлять картинку и подпись здесь  НО ПОКА НИЧЕГО НЕ СТАВИТСЯ, ТОЛЬКО ОТКРЫВАЕТСЯ И ЗАКРЫВАЕТСЯ
   }
+
+
 }
-*/
-class PopupWithForm extends Popup {
-  constructor(call, popupSelector) {
+
+
+
+export  class PopupWithForm extends Popup {
+  constructor(popupSelector, call) {
     super(popupSelector),
     this.call = call
     //должен принимать еще колбек сабмита формы
-    this.formSelector = this.popupSelector.querySelector('.form');
+    this.form = this.popup.querySelector('.form');
   }
 
   _getInputValues() {
     //который собирает данные всех полей формы.
+    
+  const name = placeNameInput.value;  //забираем из поля формы название
+  const link = placeLinkInput.value; // забираем из поля формы адрес картинки
+  
+  const newPlase = {name, link}; //создаем массив
+
   }
 
-  _setEventListeners() {
-    super._setEventListeners();
+  setEventListeners() {
+    super.setEventListeners();
     //но и добавлять обработчик сабмита формы.
-    this.call.//дальше должен идти обработчик
+   this._image.addEventListener('click', () =>{
+    this._handleEscClose(this._name, this._link)
+   })
+    //this.call
   }
 
   close() {
-    super(close);
-    this.formSelector.reset()
+    super.close();
+    this.form.reset()
     //при закрытии попапа форма должна ещё и сбрасываться.
   }
 }

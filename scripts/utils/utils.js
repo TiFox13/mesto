@@ -45,4 +45,3 @@ function createCard(item) {
   const cardElement = card.render();
   return(cardElement);
 }
-
