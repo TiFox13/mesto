@@ -37,3 +37,12 @@ function closeClickOnOverlay(evt) {
     closePopup(evt.target);
   }
 };
+
+
+
+function createCard(item) {
+  const card = new Card(item, '#template-card');
+  const cardElement = card.render();
+  return(cardElement);
+}
+

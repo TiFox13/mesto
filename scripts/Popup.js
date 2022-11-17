@@ -54,11 +54,13 @@ class PopupWithImage extends Popup {
     }
   }
 }
-
+*/
 class PopupWithForm extends Popup {
-  constructor() {
+  constructor(call, popupSelector) {
     super(popupSelector),
+    this.call = call
     //должен принимать еще колбек сабмита формы
+    this.formSelector = this.popupSelector.querySelector('.form');
   }
 
   _getInputValues() {
@@ -66,14 +68,15 @@ class PopupWithForm extends Popup {
   }
 
   _setEventListeners() {
-    super(_setEventListeners);
+    super._setEventListeners();
     //но и добавлять обработчик сабмита формы.
+    this.call.//дальше должен идти обработчик
   }
 
   close() {
     super(close);
+    this.formSelector.reset()
     //при закрытии попапа форма должна ещё и сбрасываться.
   }
 }
 
-*/

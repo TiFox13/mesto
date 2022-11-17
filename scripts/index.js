@@ -1,5 +1,6 @@
 import  FormValidator from "./FormValidator.js";
 import  Card from "./Card.js";
+import Section from "./Section.js";
 import { validationConfig} from "./utils/constants.js";
 import { initialCards } from "./initialCards.js";
 import {bigImagePopup,
@@ -25,30 +26,40 @@ const placeLinkInput = document.querySelector('.form__item_content_place-image')
 
 const newPlaceAddButton = document.querySelector('.add-button');  // Это кнопка добавления нового места
 
+
+// переворачиваем массив
+const initialCardsReverse = initialCards.reverse();
+
+
 const profileFormValid = new FormValidator(validationConfig, profileEditForm);
 const newPlaceValid = new FormValidator(validationConfig, newPlaceCreateForm);
+const section = new Section({items: initialCardsReverse, renderer: createCard}, ".elements")
 //запустили валидацию
 profileFormValid.enableValidation(profileEditForm);
   newPlaceValid.enableValidation(newPlaceCreateForm);
 
+section.startRender();
+
 //функция, которая делает карточки, создавая объект класса Card
-function createCard(item) {
+export function createCard(item) {
   const card = new Card(item, '#template-card');
   const cardElement = card.render();
   return(cardElement);
 }
-
+/*
 //функция, которая добавляет карточки в DOM
 function addCard(el) {
   elements.prepend(el);
 }
 
-// переворачиваем массив
-const initialCardsReverse = initialCards.reverse();
+
+
 // "пролистываем" его, вызывая для каждого элемента переменную, которая создает объект класса Card
 initialCardsReverse.forEach((item) => {
   addCard(createCard(item));
 });
+*/
+
 
 // функция сохранения изменений в форме
 function submitHandlerEditProfileForm (evt) {
@@ -67,7 +78,7 @@ function createNewPlace (evt) {
 
   const newPlase = {name, link}; //создаем массив
   //вызываем метод объекта класса Card который отрисует нам новую карточку
-  addCard(createCard(newPlase));
+  section.render(newPlase);
   closePopup(newPlacePopup); // вызвали функцию закрытия этой формы
 }
 
@@ -86,7 +97,7 @@ newPlaceAddButton.addEventListener('click', ()=>  {
   showPopup(newPlacePopup);
   newPlaceCreateForm.reset();
 
-// спрятали ошшибки
+// спрятали ошибки
   newPlaceValid.resetValidation();
 });
 
