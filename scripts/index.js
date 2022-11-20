@@ -1,25 +1,20 @@
-import  FormValidator from "./FormValidator.js";
-import  Card from "./Card.js";
-import Section from "./Section.js";
-import PopupWithImage from "./Popup.js";
-import {PopupWithForm} from "./Popup.js"
-import { validationConfig} from "./utils/constants.js";
-import { initialCards } from "./initialCards.js";
-import {bigImagePopup,
-        showPopup,
-        closePopup,
-        } from "./utils/utils.js"
-import UserInfo from "./UserInfo.js";
+import { validationConfig, initialCards} from "./utils/constants.js";
+
+import  FormValidator from "./components/FormValidator.js";
+import  Card from "./components/Card.js";
+import Section from "./components/Section.js";
+import UserInfo from "./components/UserInfo.js";
+import {PopupWithForm, PopupWithImage} from "./components/Popup.js"
 
 const buttonEdit = document.querySelector('.edit-button'); //кнопка "редактировать"
 const popupEditProfile = document.querySelector('.popup_edit-profile');  //попап редактирования профиля
-const profileEditCloseButton = document.querySelector('.close-button_profile-popup'); //кнопка "закрыть форму редактирования профиля"
+//const profileEditCloseButton = document.querySelector('.close-button_profile-popup'); //кнопка "закрыть форму редактирования профиля"
 const newPlacePopup = document.querySelector('.popup_new-place'); //попап создания карточек
-const newPlaceCloseButton = document.querySelector('.close-button_new-card-popup'); //кнопка "закрыть форму создания карточек"
-const bigImageCloseButton = document.querySelector('.close-button_big-image-popup'); //кнопка "закрыть большую картинку"
-const elements = document.querySelector('.elements');
-const profileName = document.querySelector('.profile__name'); //вот переменная, куда загрузим имя
-const profileAbout = document.querySelector('.profile__about'); // вот сюда мы загрудим остальную инфу
+//const newPlaceCloseButton = document.querySelector('.close-button_new-card-popup'); //кнопка "закрыть форму создания карточек"
+//const bigImageCloseButton = document.querySelector('.close-button_big-image-popup'); //кнопка "закрыть большую картинку"
+//const elements = document.querySelector('.elements');
+//const profileName = document.querySelector('.profile__name'); //вот переменная, куда загрузим имя
+//const profileAbout = document.querySelector('.profile__about'); // вот сюда мы загрудим остальную инфу
 const profileEditForm = popupEditProfile.querySelector('.form');  //вот переменная с формой
 const newPlaceCreateForm = newPlacePopup.querySelector('.form');
 const nameInput = profileEditForm.querySelector('.form__item_content_name'); //поле формы с именем
@@ -29,11 +24,11 @@ const placeLinkInput = document.querySelector('.form__item_content_place-image')
 
 const newPlaceAddButton = document.querySelector('.add-button');  // Это кнопка добавления нового места
 
-
+const userInfo ={name: nameInput, about: jobInput};
 // переворачиваем массив
 const initialCardsReverse = initialCards.reverse();
 
-
+//Создадим экземпляры классов
 const profileFormValid = new FormValidator(validationConfig, profileEditForm);
 const newPlaceValid = new FormValidator(validationConfig, newPlaceCreateForm);
 const section = new Section({items: initialCardsReverse, renderer: createCard}, ".elements");
@@ -42,10 +37,12 @@ const user = new UserInfo( {userName:'.profile__name', userAbout: '.profile__abo
 const imagePopup = new PopupWithImage('.popup_big-image');
 const formNewPlacePopup = new PopupWithForm('.popup_new-place', createNewPlace);
 const formEditProfilePopup = new PopupWithForm('.popup_edit-profile', submitHandlerEditProfileForm)
+
 //запустили валидацию
 profileFormValid.enableValidation(profileEditForm);
   newPlaceValid.enableValidation(newPlaceCreateForm);
 
+//Создали стартовые карточки
 section.startRender();
 
 //функция, которая делает карточки, создавая объект класса Card
@@ -54,50 +51,33 @@ export function createCard(item) {
   const cardElement = card.render();
   return(cardElement);
 }
-/*
-//функция, которая добавляет карточки в DOM
-function addCard(el) {
-  elements.prepend(el);
-}
-// "пролистываем" его, вызывая для каждого элемента переменную, которая создает объект класса Card
-initialCardsReverse.forEach((item) => {
-  addCard(createCard(item));
-});
-*/
 
 //должна вызывать попап при клике на карточку ( передается в Card)
 function handleCardClick(link, name) {
   const imageToClick = this._view.querySelector('.element__photo');
   imageToClick.addEventListener('click', () => {
-   //const placeName = evt.target.alt;
   // console.log('ну кликнул ты')
-   //const link = evt.target.src;
     imagePopup.open(link, name);
   });
-
 }
-const userInfo ={name: nameInput, about: jobInput};
+
+
 // функция сохранения изменений в форме
 function submitHandlerEditProfileForm (evt) {
-  //evt.preventDefault(); //отключили стандартную отправку формы
   user.setUserInfo(userInfo);
- // profileName.textContent = nameInput.value; // сказали "запиши мне в ProfileName содержимое поля с именем"
-  //profileAbout.textContent = jobInput.value; // то же самое для остальной инфы
   formEditProfilePopup.close(); // вызвали функцию закрытия формы
 }
 
 // отправка формы для создания новой карточки
 function createNewPlace (evt) {
- // console.log(this._formInputValues)
- // evt.preventDefault(); //отключили стандартную отправку формы
-  const name = placeNameInput.value;  //забираем из поля формы название
+ const name = placeNameInput.value;  //забираем из поля формы название
  const link = placeLinkInput.value; // забираем из поля формы адрес картинки
 
   const newPlase = {name, link}; //создаем массив
   //вызываем метод объекта класса Card который отрисует нам новую карточку
   section.render(newPlase);
-  formNewPlacePopup.close()
-   // вызвали функцию закрытия этой формы
+  formNewPlacePopup.close()// вызвали функцию закрытия этой формы
+   
 }
 
 
@@ -105,30 +85,14 @@ function createNewPlace (evt) {
 // Открытие первого окна(редактирование профиля)
 buttonEdit.addEventListener('click', ()=> {
   user.setUserInfoValues(userInfo);
-  //nameInput.value = profileName.textContent; // подгрузили в поля формы нужное имя
-  //jobInput.value = profileAbout.textContent;
-
   formEditProfilePopup.open()
-  //showPopup(popupEditProfile);
 
-//спрятали ошибки
-profileFormValid.resetValidation();
+  profileFormValid.resetValidation();//спрятали ошибки
 });
 
 // Открытие второго попапа (создание карточек)
 newPlaceAddButton.addEventListener('click', ()=>  {
-  formNewPlacePopup.open()
-  //newPlaceCreateForm.reset();
+  formNewPlacePopup.open();
 
-// спрятали ошибки
-  newPlaceValid.resetValidation();
+  newPlaceValid.resetValidation();// спрятали ошибки
 });
-
-//profileEditCloseButton.addEventListener('click', ()=> closePopup(popupEditProfile)); // Закрытие первого попапа
-
-// Закрытие второго попапа (создание карточек)
-//newPlaceCloseButton.addEventListener('click', ()=> closePopup(newPlacePopup));
-
-//bigImageCloseButton.addEventListener('click', ()=> closePopup(bigImagePopup)); //закрытие окна с увеличенной картинкой
-//profileEditForm.addEventListener('submit', submitHandlerEditProfileForm); //при событии "отправка" запускаем функцию редактирования данных
-//newPlaceCreateForm.addEventListener('submit', createNewPlace); // при событии "отправка" создаем новую карточку

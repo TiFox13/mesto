@@ -1,4 +1,3 @@
-
 class Popup {
   constructor(popupSelector){
     this.popup = document.querySelector(popupSelector);
@@ -6,13 +5,13 @@ class Popup {
   }
 
   open() {
-   // console.log('я работаю');
+    // console.log('я работаю');
     this.popup.classList.add('popup_opened');
     this.setEventListeners(); 
   }
 
   close() {
-  this.popup.classList.remove('popup_opened');
+    this.popup.classList.remove('popup_opened');
   }
 
 //содержит логику закрытия попапа клавишей Esc
@@ -21,15 +20,16 @@ class Popup {
     if (evt.key ==='Escape') {
      // console.log('а конструкция if?');
       this.close();
+    }
   }
-  }
-  // метод закрытия через клик вне области попапа
-_handleOverlayClose(evt) {
-  //console.log('сработала вторая штука');
-  if (evt.target === evt.currentTarget) {
-    this.close();
-  }
-};
+
+    // метод закрытия через клик вне области попапа
+  _handleOverlayClose(evt) {
+    //console.log('сработала вторая штука');
+    if (evt.target === evt.currentTarget) {
+      this.close();
+    }
+  };
 
   setEventListeners() {
     //console.log("листенер на связи!");
@@ -39,8 +39,7 @@ _handleOverlayClose(evt) {
   }
 }
 
-
-export default class PopupWithImage extends Popup {
+export  class PopupWithImage extends Popup {
   constructor(popupSelector){
     super(popupSelector);
     this._image = this.popup.querySelector('.popup-image__image');
@@ -58,8 +57,6 @@ export default class PopupWithImage extends Popup {
   }
 }
 
-
-
 export  class PopupWithForm extends Popup {
   constructor(popupSelector, handleSubmit) {
     super(popupSelector),
@@ -71,15 +68,10 @@ export  class PopupWithForm extends Popup {
 
   _getInputValues() {
     this._formInputValues = {};
-    this._inputList. forEach(input =>{
+    this._inputList. forEach(input => {
       this._formInputValues[item]=input.value;
     });
     return(this._formInputValues);
-    //который собирает данные всех полей формы. 
-  //const name = placeNameInput.value;  //забираем из поля формы название
-  //const link = placeLinkInput.value; // забираем из поля формы адрес картинки
-  //const info = {name, link}; //создаем массив
-  //  return(info);
   }
 
   setEventListeners() {
@@ -87,19 +79,13 @@ export  class PopupWithForm extends Popup {
     this.form.addEventListener('submit', ((evt) => {
       evt.preventDefault();
       this._getInputValues();
-
-    this.handleSubmit()
-    }))
-    //но и добавлять обработчик сабмита формы.
+      this.handleSubmit()//обработчик сабмита формы.
+    })) 
   }
-
-  
 
   close() {
-    console.log('закрытие отработало!')
+    //console.log('закрытие отработало!');
     super.close();
-   this.form.reset()
-    //при закрытии попапа форма должна ещё и сбрасываться.
+    this.form.reset() //при закрытии попапа форма должна ещё и сбрасываться.
   }
 }
-

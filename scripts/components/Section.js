@@ -1,4 +1,3 @@
-
 export default class Section {
   constructor({items, renderer}, containerSelector) {
     this.items =items;
@@ -9,19 +8,18 @@ export default class Section {
   startRender() {
     this.items.forEach((item) => {
       this.render(item);
-  })
-}
+    })
+  }
 
   render(item) {
 //отрисовывает элементы. Отрисовка каждого отдельного элемента должна осуществляться функцией `renderer`.
    const card = this.renderer(item);
       this.addItem(card)
-    
-}
+  }
 
   addItem(el) {
 //который принимает DOM-элемент и добавляет его в контейнер.
-this.container.prepend(el);
+    this.container.prepend(el);
   }
 }
 

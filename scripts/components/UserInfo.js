@@ -5,8 +5,7 @@ export default class UserInfo {
     }
 
     getUserInfo() {
-        console.log('гетинфо отработала!', this._userName, this._userAbout)
-
+       // console.log('гетинфо отработала!', this._userName, this._userAbout)
         const profileInfo = {
             userName : this._userName.textContent,
             userAbout : this._userAbout.textContent,

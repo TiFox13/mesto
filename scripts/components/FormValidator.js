@@ -1,4 +1,4 @@
-//общий класс валидации. у него будет двое детей
+//общий класс валидации. Формы две, значит создаем дважды
 export default class FormValidator {
   constructor(validationConfig, form){
   this._inputSelector = validationConfig.inputSelector;
@@ -16,12 +16,11 @@ export default class FormValidator {
     this._setEventListeners();
   }
 
-  //понучаетс дубляж кода. мне это не нравится 
   resetValidation() {
     this._toggleFormBatton(this._inputList, this._saveButton);
     this._inputList.forEach((inputElement) => {
-    this._hideItemError(inputElement);
-  });
+      this._hideItemError(inputElement);
+    });
   }
 
   _setEventListeners () {
@@ -34,7 +33,7 @@ export default class FormValidator {
     });
   }
 
- _hideItemError(inputElement) {
+  _hideItemError(inputElement) {
     const errorElement = this._formSelector.querySelector(`.${inputElement.id}-error`);
       inputElement.classList.remove(this._inputErrorClass);
       errorElement.classList.remove(this._errorClass);
@@ -51,7 +50,7 @@ export default class FormValidator {
     errorElement.classList.add(this._errorClass);
   }
 
- _checkInputValidity = (inputElement) => {
+  _checkInputValidity = (inputElement) => {
     if (!inputElement.validity.valid) {
       // Передадим сообщение об ошибке вторым аргументом
       this._showItemError(inputElement, inputElement.validationMessage);
@@ -68,16 +67,14 @@ export default class FormValidator {
 
   _toggleFormBatton() {
       // Если есть хотя бы один невалидный инпут
-      if (this._hasValidInput(this._inputList)) {
+    if (this._hasValidInput(this._inputList)) {
         // сделай кнопку неактивной
-        this._saveButton.classList.add(this._inactiveButtonClass);
-        this._saveButton.setAttribute('disabled', 'disabled');
-      } else {
+      this._saveButton.classList.add(this._inactiveButtonClass);
+      this._saveButton.setAttribute('disabled', 'disabled');
+    } else {
         // иначе сделай кнопку активной
-        this._saveButton.classList.remove(this._inactiveButtonClass);
-        this._saveButton.removeAttribute('disabled', 'disabled');
-      }
+      this._saveButton.classList.remove(this._inactiveButtonClass);
+      this._saveButton.removeAttribute('disabled', 'disabled');
     }
-
- 
   }
+}
