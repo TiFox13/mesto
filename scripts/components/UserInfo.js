@@ -15,15 +15,9 @@ export default class UserInfo {
     }
 
     setUserInfo(obg) {
-        console.log('подгрузка стработала!')
+        console.log('подгрузили в поля данные из формы ( user.setUserInfo(userInfo))')
+        console.log(obg.name.value, obg.about.value);
         this._userName.textContent = obg.name.value;
         this._userAbout.textContent = obg.about.value;
-    }
-
-    setUserInfoValues(obg) {
-        const profileInfo = this.getUserInfo(this._userName, this._userAbout);
-       
-        obg.name.value = profileInfo.userName;
-        obg.about.value = profileInfo.userAbout;
     }
 }

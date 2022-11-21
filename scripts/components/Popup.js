@@ -12,6 +12,9 @@ class Popup {
 
   close() {
     this.popup.classList.remove('popup_opened');
+    this.closeButton.removeEventListener('click',() => this.close());  //слушатель клика иконке закрытия попапа?
+    document.removeEventListener('keydown', (evt) => this._handleEscClose(evt)); //вешаем слушатель для клика по ESC?
+    this.popup.removeEventListener('mousedown', (evt) => this._handleOverlayClose(evt)); // вешаем слушатель для клика по оверлею
   }
 
 //содержит логику закрытия попапа клавишей Esc
@@ -47,13 +50,12 @@ export  class PopupWithImage extends Popup {
   }
 
   open(link, name) { 
-   // console.log('jnrhsnbt gjgfg');
+    //console.log('открытие сработало');
     super.open();
     super.setEventListeners();
     this._image.src = link;
     this._image.alt = name;
     this._text.textContent = name;
-//нужно вставлять картинку и подпись здесь  НО ПОКА НИЧЕГО НЕ СТАВИТСЯ, ТОЛЬКО ОТКРЫВАЕТСЯ И ЗАКРЫВАЕТСЯ
   }
 }
 
@@ -76,16 +78,15 @@ export  class PopupWithForm extends Popup {
 
   setEventListeners() {
     super.setEventListeners();
-    this.form.addEventListener('submit', ((evt) => {
-      evt.preventDefault();
-      this._getInputValues();
-      this.handleSubmit()//обработчик сабмита формы.
-    })) 
+    this._getInputValues(); 
+    this.form.addEventListener('submit', this.handleSubmit) //обработчик сабмита формы.
   }
 
   close() {
     //console.log('закрытие отработало!');
     super.close();
-    this.form.reset() //при закрытии попапа форма должна ещё и сбрасываться.
+    this.form.reset();
+    //console.log("очистка полей сработала"); 
+
   }
 }

@@ -13,6 +13,7 @@ export default class Section {
 
   render(item) {
 //отрисовывает элементы. Отрисовка каждого отдельного элемента должна осуществляться функцией `renderer`.
+console.log("отрисовали карточку");
    const card = this.renderer(item);
       this.addItem(card)
   }

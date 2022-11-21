@@ -17,6 +17,7 @@ export default class FormValidator {
   }
 
   resetValidation() {
+    console.log('очистка полей ошибок сработала')
     this._toggleFormBatton(this._inputList, this._saveButton);
     this._inputList.forEach((inputElement) => {
       this._hideItemError(inputElement);
