@@ -1,12 +1,12 @@
 // вебпак добавит в переменные правильные пути
-import logoImage from './images/header-logo.svg';
-import avatar from './images/avatar.jpg';
-import trash from './images/Trash.svg';
-import plus from './images/+.svg';
-import closeIcon from './images/Close-Icon.svg';
-import editIcon from './images/Edit-Button.svg';
-import likeIcon from './images/like.svg';
-import likeActiveIcon from './images/like-active.svg';
+import logoImage from '../images/header-logo.svg';
+import avatar from '../images/avatar.jpg';
+import trash from '../images/Trash.svg';
+import plus from '../images/+.svg';
+import closeIcon from '../images/Close-Icon.svg';
+import editIcon from '../images/Edit-Button.svg';
+import likeIcon from '../images/like.svg';
+import likeActiveIcon from '../images/like-active.svg';
 
 
 const images = [
@@ -23,13 +23,13 @@ const images = [
 
 import './pages/index.css';
 
-import { validationConfig, initialCards} from "./scripts/utils/constants.js";
+import { validationConfig, initialCards} from "./utils/constants.js";
 
-import  FormValidator from "./scripts/components/FormValidator.js";
-import  Card from "./scripts/components/Card.js";
-import Section from "./scripts/components/Section.js";
-import UserInfo from "./scripts/components/UserInfo.js";
-import {PopupWithForm, PopupWithImage} from "./scripts/components/Popup.js"
+import  FormValidator from "./components/FormValidator.js";
+import  Card from "./components/Card.js";
+import Section from "./components/Section.js";
+import UserInfo from "./components/UserInfo.js";
+import {PopupWithForm, PopupWithImage} from "./components/Popup.js"
 
 const buttonEdit = document.querySelector('.edit-button'); //кнопка "редактировать"
 const popupEditProfile = document.querySelector('.popup_edit-profile');  //попап редактирования профиля
