@@ -1,12 +1,12 @@
 // вебпак добавит в переменные правильные пути
-/*import logoImage from './images/header-logo.svg';
-import avatar from './images/avatar.jpg';
-import trash from './images/Trash.svg';
-import plus from './images/+.svg';
-import closeIcon from './images/Close-Icon.svg';
-import editIcon from './images/Edit-Button.svg';
-import likeIcon from './images/like.svg';
-import likeActiveIcon from './images/like-active.svg';
+import logoImage from '../images/header-logo.svg';
+import avatar from '../images/avatar.jpg';
+import trash from '../images/Trash.svg';
+import plus from '../images/+.svg';
+import closeIcon from '../images/Close-Icon.svg';
+import editIcon from '../images/Edit-Button.svg';
+import likeIcon from '../images/like.svg';
+import likeActiveIcon from '../images/like-active.svg';
 
 
 const images = [
@@ -21,8 +21,8 @@ const images = [
   { name: 'likeActiveIcon', link: likeActiveIcon },
 ]; 
 
-import './pages/index.css';
-*/
+import '../pages/index.css';
+
 import { validationConfig, initialCards} from "./utils/constants.js";
 
 import  FormValidator from "./components/FormValidator.js";
