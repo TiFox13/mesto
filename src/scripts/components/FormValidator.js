@@ -17,7 +17,7 @@ export default class FormValidator {
   }
 
   resetValidation() {
-    this._toggleFormBatton(this._inputList, this._saveButton);
+    this._toggleFormBatton();
     this._inputList.forEach((inputElement) => {
       this._hideItemError(inputElement);
     });
@@ -28,7 +28,7 @@ export default class FormValidator {
       this._hideItemError(inputElement);
       inputElement.addEventListener('input', ()=> {
       this._checkInputValidity(inputElement);
-      this._toggleFormBatton(this._inputList, this._saveButton);
+      this._toggleFormBatton();
       });
     });
   }

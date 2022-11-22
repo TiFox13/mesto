@@ -13,7 +13,7 @@ export default class Card {
     .querySelector('.element')
     .cloneNode(true)
 
-    return(createCard);
+    return createCard;
   }
 
   // этот метод отрисовывает блок и убирает в него данные
@@ -29,7 +29,7 @@ export default class Card {
       this._handleCardClick(this._link, this._name);
     });
 
-    return (this._view);
+    return this._view;
   }
 
   //вешает слушатели на карточки
