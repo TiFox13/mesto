@@ -25,6 +25,9 @@ export default class Card {
     this._image.alt = this._name;
      //вызывает метод, который повесит слушатели на создаваемую карточку
     this._setEventListeners();
+    this._image.addEventListener('click', ()=> {
+      this._handleCardClick(this._link, this._name);
+    });
 
     return (this._view);
   }
@@ -33,7 +36,6 @@ export default class Card {
   _setEventListeners() {
     this._like();
     this._trash();
-    this._handleCardClick(this._link, this._name); 
   }
 
   // метод для лайков
@@ -45,8 +47,7 @@ export default class Card {
 
   //а  этот метод удаляет карточки
   _trash() {
-    this._view.querySelector('.trash-button').addEventListener('click', (evt)=> {
-       evt.target.closest(".element").remove();
-    });
+    this._view.querySelector('.trash-button').addEventListener('click', () => this._view.remove());
+    this._element = null;
   }
 }

@@ -5,19 +5,15 @@ export default class UserInfo {
     }
 
     getUserInfo() {
-       // console.log('гетинфо отработала!', this._userName, this._userAbout)
         const profileInfo = {
             userName : this._userName.textContent,
             userAbout : this._userAbout.textContent,
         };
         return (profileInfo);
-
     }
 
-    setUserInfo(obg) {
-        console.log('подгрузили в поля данные из формы ( user.setUserInfo(userInfo))')
-        console.log(obg.name.value, obg.about.value);
-        this._userName.textContent = obg.name.value;
-        this._userAbout.textContent = obg.about.value;
+    setUserInfo(obJect) {
+        this._userName.textContent = obJect.name;
+        this._userAbout.textContent = obJect.about;
     }
 }
