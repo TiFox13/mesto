@@ -1,7 +1,15 @@
 import { images } from './utils/constants.js';
 import '../pages/index.css';
 
-import { validationConfig, initialCards} from "./utils/constants.js";
+import { validationConfig,
+        buttonEdit,
+        profileEditForm,
+        newPlaceCreateForm,
+        nameInput,
+        jobInput,
+        newPlaceAddButton,
+        initialCardsReverse
+} from "./utils/constants.js";
 
 import FormValidator from "./components/FormValidator.js";
 import Card from "./components/Card.js";
@@ -10,20 +18,6 @@ import UserInfo from "./components/UserInfo.js";
 import PopupWithForm from './components/PopupWithForm.js';
 import PopupWithImage from './components/PopupWithImage.js';
 
-const buttonEdit = document.querySelector('.edit-button'); //кнопка "редактировать"
-const popupEditProfile = document.querySelector('.popup_edit-profile');  //попап редактирования профиля
-
-const newPlacePopup = document.querySelector('.popup_new-place'); //попап создания карточек
-
-const profileEditForm = popupEditProfile.querySelector('.form');  //вот переменная с формой
-const newPlaceCreateForm = newPlacePopup.querySelector('.form');
-const nameInput = profileEditForm.querySelector('.form__item_content_name'); //поле формы с именем
-const jobInput = profileEditForm.querySelector('.form__item_content_about'); //поле формы с доп инфой
-
-const newPlaceAddButton = document.querySelector('.add-button');  // Это кнопка добавления нового места
-
-// переворачиваем массив
-const initialCardsReverse = initialCards.reverse();
 
 //Создадим экземпляры классов
 const profileFormValid = new FormValidator(validationConfig, profileEditForm);
