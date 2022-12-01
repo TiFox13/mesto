@@ -2,8 +2,49 @@
     max-width: 120px;
     height: 120px;
     /*max-width: 168.75px;*/
+    position: relative;
+    
     border-radius: 50%;
 }
+
+.avatar-button {
+    border: 0;
+    background-color:rgba(0, 0, 0, 0);
+}
+.avatar-button:hover {
+    cursor: pointer;
+}
+.avatar-button::before {
+    content: "";
+    position: absolute;
+    display: block;
+    background: url(../../../images/avatar-edit-icon.svg) no-repeat center center;
+   z-index: 2;
+    height: 120px;
+    width: 120px;
+    opacity: 0;
+    transition: 0.5s;
+}
+.avatar-button::after {
+    content: "";
+    position: absolute;
+    top: 160px;
+    display: block;
+  background-color: #2A2C2F;
+  border-radius: 50%;
+  opacity: 0;
+    height: 120px;
+    width: 120px;
+    z-index: 1;
+    transition: 0.5s;
+}
+.avatar-button:hover:after {
+    opacity: 0.8;
+}
+.avatar-button:hover::before{
+    opacity: 1;
+}
+
 
 @media all and (max-width: 550px) {
     .profile__avatar {

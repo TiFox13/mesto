@@ -1,9 +1,11 @@
 export default class Card {
-  constructor(item, templateSelector, handleCardClick) {
+  constructor(item, templateSelector, handleCardClick, confirmation) {
     this._name = item.name;
     this._link = item.link;
     this._templateSelector = templateSelector;
     this._handleCardClick = handleCardClick;
+    this._confirmation = confirmation;
+
   }
 
   //этот метод делает пустой блок с болванки
@@ -21,6 +23,7 @@ export default class Card {
     this._view = this._getTemplate();
     this._image = this._view.querySelector('.element__photo')
     this._view.querySelector('.element__text').textContent = this._name;
+    this._trashButton = this._view.querySelector('.trash-button')
     this._image.src = this._link;
     this._image.alt = this._name;
      //вызывает метод, который повесит слушатели на создаваемую карточку
@@ -35,7 +38,7 @@ export default class Card {
   //вешает слушатели на карточки
   _setEventListeners() {
     this._like();
-    this._trash();
+    this._trashButton.addEventListener('click',  this._confirmation);
   }
 
   // метод для лайков
@@ -46,8 +49,8 @@ export default class Card {
   }
 
   //а  этот метод удаляет карточки
-  _trash() {
-    this._view.querySelector('.trash-button').addEventListener('click', () => this._view.remove());
+  trash() {
+     this._view.remove();
     this._element = null;
   }
 }
