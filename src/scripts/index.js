@@ -213,9 +213,9 @@ newAvatarValid.resetValidation()
 //рекламная пауза, так сказать   
 function renderLoading(isLoading, button) {
   if (isLoading) {
-   button.classList.add('save-button_loading_is-loading');
+   button.classList.add('button-loading_in-loading');
   } else {
-    button.classList.remove('save-button_loading_is-loading');
+    button.classList.remove('button-loading_in-loading');
   }
 
 

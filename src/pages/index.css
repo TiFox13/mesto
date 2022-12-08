@@ -37,8 +37,8 @@
 @import url(../blocks/form/__heading/form__heading.css);
 
 @import url(../blocks/save-button/save-button.css);
-@import url(../blocks/save-button/_loading/save-button_loading.css);
-@import url(../blocks/save-button/_loading/_is-loading/save-button_loading_is-loading.css);
+@import url(../blocks/button-loading/button-loading.css);
+@import url(../blocks/button-loading/_in-loading/save-button_loading_in-loading.css);
 
 @import url(../blocks/save-button/_inactive/save-button_inactive.css);
 @import url(../blocks/close-button/close-button.css);
