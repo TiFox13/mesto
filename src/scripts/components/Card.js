@@ -1,15 +1,17 @@
 export default class Card {
-  constructor(item, templateSelector, handleCardClick, confirmation, addLike, deleteLike) {
+  constructor(item, templateSelector, handleCardClick, confirmation, addLike, deleteLike, userId) {
     this._name = item.name;
     this._link = item.link;
+    this._likes = item.likes;
+    this._id = item._id;
+    this._owner = item.owner;
+    this._userId = userId;
+//теперь добавим все функции
     this._templateSelector = templateSelector;
     this._handleCardClick = handleCardClick;
     this._confirmation = confirmation;
     this._addLike = addLike;
     this._deleteLike = deleteLike;
-    this._likes = item.likes;
-    this._id = item._id;
-
   }
 
   //этот метод делает пустой блок с болванки
@@ -36,19 +38,14 @@ export default class Card {
     this._likesCounter = this._view.querySelector('.like-counter');
     this._likesCounter.textContent = this._likes.length;
 
-//const compareId =  (element)=> {     ///ПО ИДЕЕ. ЭТУ ХРЕНЬ НАДО УНЕСТИ ОТСЮДА В ИНДЕКС!
-   //return element._id === user._id
-//}
-
     if (this._likes.some(compareId) === true) {
-     // console.log('Алоха!')
-this._likeButton.classList.add('like_active')
+    this._likeButton.classList.add('like_active')
     }
 
      //вызывает метод, который повесит слушатели на создаваемую карточку
     this._setEventListeners();
-    if (this._id != user.myId) {
-      this._trashButton.remove();
+    if (this._owner._id != this._userId) {  
+     this._trashButton.remove();
     } 
     this._image.addEventListener('click', ()=> {
       this._handleCardClick(this._link, this._name);
@@ -61,12 +58,11 @@ this._likeButton.classList.add('like_active')
   _setEventListeners() {
 
     this._view.querySelector('.like').addEventListener('click', (evt) =>{
-      console.log (evt.target.classList.contains('like_active'))
      if (evt.target.classList.contains('like_active')) {
        evt.target.classList.remove('like_active');
     this._deleteLike(this._id)
     this._likes.length  = this._likes.length -1;
-    this._likesCounter.textContent = this._likes.length;  // вот это место под вопросом   (если лайк поставить и снять без обновления страницы, то число возвращается не изначальное, а -1)
+    this._likesCounter.textContent = this._likes.length; 
      } else {
       evt.target.classList.add('like_active');
       this._addLike(this._id)
@@ -79,16 +75,4 @@ this._likeButton.classList.add('like_active')
     this._trashButton.addEventListener('click',  () => this._confirmation(this._id, this._view));
   }
 
-  // метод для лайков
-  //_like() {
-   // this._view.querySelector('.like').addEventListener('click', function(evt) {
-   //   evt.target.classList.toggle('like_active');
-  //  });
-  //}
-
-  //а  этот метод удаляет карточки
-  /*trash() {
-     this._view.remove();
-    this._element = null;
-  }*/
 }

@@ -24,7 +24,6 @@ export default class PopupWithSubmit extends Popup {
       this.popup.addEventListener('submit', (evt) => {
         evt.preventDefault(); 
         this.handleSubmit(this._cardId, this._card)
-        this.renderLoading(this.submitButton)
       })
     }
 

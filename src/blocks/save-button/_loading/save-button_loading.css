@@ -1,4 +1,6 @@
-.save-button {
+.save-button_loading {
+display: none;
+    position: absolute;
     box-sizing: content-box;
     width: 358px;
     height: 50px;
@@ -7,25 +9,23 @@
     border: 0;
     padding: 0;
     border-radius: 2px;
-    margin: 18px 8.23% 37px;
+    margin-top: 19px;
+    margin-left: 36px;
     font-weight: 400;
     font-size: 18px;
     line-height: 22px;
+    z-index: 2;
 }
-.save-button:hover {
-    cursor: pointer;
-    opacity: 0.8;
-}
-
 
 @media all and (max-width: 550px) {
-    .save-button {
+    .save-button_loading {
         height: 46px;
         font-size: 14px;
         line-height: 17px;
         width: 238px;
-        margin-top: 15px;
-        margin: 15px 8.23% 25px;
+        margin-top: 16px;
+        margin-left: 24px;
+       
     }
 
 }
