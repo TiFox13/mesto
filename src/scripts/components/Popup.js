@@ -12,7 +12,6 @@ export default class Popup {
   }
 
   close() {
-  console.log('сработало')  
     this.popup.classList.remove('popup_opened');
     document.removeEventListener('keydown', this._EscClose); //вешаем слушатель для клика по ESC?
   }

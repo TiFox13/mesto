@@ -1,3 +1,10 @@
+//осталось сделать
+//\\ удаление думм элемента карточки, когда она удаляется api запросом ( а она удаляется, да!)
+// поработать с отправкой инфы о лайках и отображении этих изменений в думм
+// начать НОРМАЛЬНО передавать id пользователя ( а не вручную, как я)
+// добавить режимы ожидания на кнопки попапов
+// отрефакторить код, а то я уже ничего в нем не понимаю!
+
 import { images } from './utils/constants.js';
 import '../pages/index.css';
 
@@ -11,7 +18,7 @@ import { validationConfig,
         newPlaceAddButton,
         avatarEditbutton,
         avatarImage,
-        initialCardsReverse
+        
 } from "./utils/constants.js";
 
 import FormValidator from "./components/FormValidator.js";
@@ -20,36 +27,62 @@ import Section from "./components/Section.js";
 import UserInfo from "./components/UserInfo.js";
 import PopupWithForm from './components/PopupWithForm.js';
 import PopupWithImage from './components/PopupWithImage.js';
+import PopupWithSubmit from './components/PopupWithSubmit.js';
 
-import Api from './Api.js';
+import Api from './components/Api.js';
 
 
 //Создадим экземпляры классов
 const profileFormValid = new FormValidator(validationConfig, profileEditForm);
 const newPlaceValid = new FormValidator(validationConfig, newPlaceCreateForm);
 const newAvatarValid = new FormValidator(validationConfig, newAvatarForm);
-const section = new Section({items: initialCardsReverse, renderer: createCard}, ".elements"); 
+
+const section = new Section({renderer: createCard}, ".elements"); 
 
 const user = new UserInfo( {userName:'.profile__name', userAbout: '.profile__about'})
 
 const imagePopup = new PopupWithImage('.popup_big-image');
-const formNewPlacePopup = new PopupWithForm('.popup_new-place', createNewPlace); 
-const formEditProfilePopup = new PopupWithForm('.popup_edit-profile', submitHandlerEditProfileForm);
+const formNewPlacePopup = new PopupWithForm('.popup_new-place', createNewPlace, renderLoading); 
+const formEditProfilePopup = new PopupWithForm('.popup_edit-profile', submitHandlerEditProfileForm, renderLoading);
 
-///////////////////////
-const formNewAvatarPopup = new PopupWithForm('.popup_new-avatar',  submitHandlerEditAvatarForm)
-const preDeletePopup = new PopupWithForm ('.popup_pre-delete', submitHandlerPreDelete)
-//подключаем API
-const api = new Api({
-  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-42',
+const formNewAvatarPopup = new PopupWithForm('.popup_new-avatar',  submitHandlerEditAvatarForm, renderLoading);
+const preDeletePopup = new PopupWithSubmit ('.popup_pre-delete', submitHandlerPreDelete);
+
+
+const apiConfig = {
+url: "https://mesto.nomoreparties.co/v1/cohort-54",
   headers: {
-    authorization: 'c56e30dc-2883-4270-a59e-b2f7bae969c6',//сюда вот надо МОЙ токен
-    'Content-Type': 'application/json'
+    authorization: '532cb979-197b-4764-a60b-369a0c33ba6e',
+    "Content-type": 'application/json'
   }
-});
-////////////////////////
+}
 
-section.startRender();
+
+// пока прикрутим так. очень хочу удалить эту дурацкую
+//const myId = "638f3d8bebd3b31ab4e7a99b";
+
+
+//подключаем API
+const api = new Api(apiConfig)
+ // где-то тут должны с сервера подгружаться данные профиля. но они не грузятся. но на сервер отправились, да
+api.getUserInfo()
+.then ((result) => {
+  user.setUserInfo(result);
+ // avatarImage.src = result.avatar;
+ // const myId = result._id;
+ // console.log(myId)
+})
+
+api.getInitialCards()
+.then((result) => {
+  api.getUserInfo()
+    .then ((user) => {
+      console.log(user)
+  result.forEach((item) => {
+  section.startRender(item, user)
+  })
+})
+})
 
 imagePopup.setEventListeners();
 formNewPlacePopup.setEventListeners();
@@ -63,51 +96,97 @@ newPlaceValid.enableValidation(newPlaceCreateForm);
 newAvatarValid.enableValidation(newAvatarForm);
 
 
+
+
 //функция, которая делает карточки, создавая объект класса Card
-export function createCard(item) {
-  const card = new Card(item, '#template-card',  handleCardClick, confirmation);
-  const cardElement = card.render();
+function createCard(item, user) {
+  console.log(item)
+  const card = new Card(item, '#template-card',  handleCardClick, confirmation, addLike, deleteLike);
+  const cardElement = card.render(user, {compareId: (element)=> {     ///ПО ИДЕЕ. ЭТУ ХРЕНЬ НАДО УНЕСТИ ОТСЮДА В ИНДЕКС!
+    return element._id === user._id
+ }});
+  
   return cardElement;
 }
+
 
 //должна вызывать попап при клике на карточку ( передается в Card)
 function handleCardClick(link, name) {
     imagePopup.open(link, name);
 }
 
-function confirmation() {
-  preDeletePopup.open();
+function confirmation(id, card) {
+  preDeletePopup.open(id, card);
 }
 
-function submitHandlerPreDelete() {   //эта фигня должна закрывать попап и вызывать API метод удаления карточки. сейчас она этого не делает. научим!
+function submitHandlerPreDelete(id, card) {   // закрыть попап и вызвать API метод удаления карточки. 
+api.deleteCard(id);
+deleteCard(card)
+preDeletePopup.close()
+}
+
+// ФУНКЦИЯ УДАЛЕНИЯ КАРТОЧКИ ИЗ ДУММ
+function deleteCard(card) {
+  card.remove();
+}
+
+//Как поставить этой фотке лайк?!
+function addLike(id) {
+  api.putLike(id);
+}
+// А как удалить?!
+function deleteLike(id) {
+api.deleteLike(id);
+}
+
+//рекламная пауза, так сказать    А ВОТ КАК ПОНЯТЬ, ОНО РАБОТАЕТ ИЛИ НЕ РАБОТАЕТ?!
+function renderLoading(isLoading, button) {
+  if (isLoading) {
+    button.value = "Сохранение...";
+  } 
 
 }
 
-// функция сохранения изменений АВАТАРА
+// функция сохранения изменений АВАТАРА    API
 function submitHandlerEditAvatarForm(item) {
-  avatarImage.src = item.link;
-  formNewAvatarPopup.close()
+  api.patchAvatar(item)
+  .then((result) => {
+    avatarImage.src = result.avatar;
+  })
+ formNewAvatarPopup.close()
 }
 
-// функция сохранения изменений в форме
+
+// функция сохранения изменений в форме    API
 function submitHandlerEditProfileForm (item) {
-  user.setUserInfo(item);
+
+api.patchUserInfo(item)
+.then((result) => {
+  user.setUserInfo(result);
+  nameInput.value = result.name;
+   jobInput.value = result.about;
+ })
+
   formEditProfilePopup.close(); // вызвали функцию закрытия формы
 }
 
-// отправка формы для создания новой карточки
+// отправка формы для создания новой карточки   API
 function createNewPlace (item) {  
-  const card = createCard(item);
-  section.addItem(card);
+api.addNewCard(item)
+.then((result) => {
+ section.startRender(result)
+})
 
   formNewPlacePopup.close();// вызвали функцию закрытия этой формы
 }
 
 // Открытие первого окна(редактирование профиля)
 buttonEdit.addEventListener('click', ()=> {
-  const userInfo = user.getUserInfo()
-  nameInput.value = userInfo.userName;
-  jobInput.value = userInfo.userAbout;
+  api.getUserInfo()
+    .then ((result) => {
+      nameInput.value = result.name;
+      jobInput.value = result.about;
+    })
 
   formEditProfilePopup.open();
   profileFormValid.resetValidation();//спрятали ошибки

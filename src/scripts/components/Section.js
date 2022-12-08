@@ -5,11 +5,9 @@ export default class Section {
     this.container = document.querySelector(containerSelector);
   }
 
-  startRender() {
-    this.items.forEach((item) => {
-      const newCard = this.renderer(item);
+  startRender(item, user) {
+      const newCard = this.renderer(item, user);
       this.addItem(newCard);
-    })
   }
   addItem(el) {
 //который принимает DOM-элемент и добавляет его в контейнер.

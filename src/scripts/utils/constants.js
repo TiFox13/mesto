@@ -18,33 +18,6 @@ export const validationConfig = {
   errorClass: 'form__item-error_visible'   //form__item-error-visible?
 };
 
-const initialCards = [
-  {
-    name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-  },
-  {
-    name: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-  },
-  {
-    name: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-  },
-  {
-    name: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-  },
-  {
-    name: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-  },
-  {
-    name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-  }
-];
-
 export const images = [
   // меняем исходные пути на переменные
   { name: 'logoImage', image: logoImage },
@@ -76,5 +49,3 @@ export const avatarEditbutton = document.querySelector('.avatar-button');   // �
 
 export const avatarImage = avatarEditbutton.querySelector('.profile__avatar')
 
-// переворачиваем массив
-export const initialCardsReverse = initialCards.reverse();
