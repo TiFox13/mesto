@@ -70,13 +70,13 @@ api.getUserInfo()
 
 api.getInitialCards()
 .then((result) => {
-
+  const resultReverse = result.reverse()
   api.getUserInfo()
     .then ((user) => {
-  result.forEach((item) => {
-  section.startRender(item, user)
-  })
-})
+      resultReverse.forEach((item) => {
+        section.startRender(item, user)
+      })
+    })
 })
 
 imagePopup.setEventListeners();
