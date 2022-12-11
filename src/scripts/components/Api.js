@@ -4,6 +4,12 @@ export default class Api {
       this._headers = object.headers;
     }
 
+    _getResponseData(res) {
+      if (res.ok) {
+         return res.json();
+      }
+      return Promise.reject(`Ошибка: ${res.status}`); 
+  }  
  
 // РАБОТАЕТ
   getInitialCards() {
@@ -11,17 +17,8 @@ export default class Api {
       headers: this._headers,
       method: "GET",   //можно не писать, но пока напишу
     })
-      .then ((res) => {
-        if (res.ok) {
-          return res.json();
-        } else {
-          return Promise.reject(`Ошибка: ${res.status}`);
-        }
-      })
-      .catch ((error) => {
-        console.log(error); // выведем ошибку в консоль
-      })
-  }
+    .then ((res) => this._getResponseData(res))
+   }
 
 
   getUserInfo() {
@@ -29,16 +26,8 @@ export default class Api {
       headers: this._headers,
       method: "GET",   //можно не писать, но пока напишу
       })
-      .then ((res) => {
-        if (res.ok) {
-          return res.json();
-        } else {
-          return Promise.reject(`Ошибка: ${res.status}`);
-        }
-      })
-      .catch ((error) => {
-        console.log(error); // выведем ошибку в консоль
-      })
+      .then ((res) => this._getResponseData(res))
+     
     }
 
     
@@ -53,16 +42,7 @@ export default class Api {
         likes: {}
       })
     })
-      .then ((res) => {
-        if (res.ok) {
-          return res.json();
-        } else {
-          return Promise.reject(`Ошибка: ${res.status}`);
-        }
-      })
-      .catch ((error) => {
-        console.log(error); // выведем ошибку в консоль
-      })
+    .then ((res) => this._getResponseData(res))
     }
 
 
@@ -77,16 +57,7 @@ export default class Api {
         about: item.about
       })
     }) 
-    .then ((res) => {
-      if (res.ok) {
-        return res.json();
-      } else {
-        return Promise.reject(`Ошибка: ${res.status}`);
-      }
-    })
-    .catch ((error) => {
-      console.log(error); // выведем ошибку в консоль
-    })
+    .then ((res) => this._getResponseData(res))
     }
    
 // РАБОТАЕТ
@@ -98,16 +69,7 @@ export default class Api {
         avatar: item.link
       })
     }) 
-    .then ((res) => {
-      if (res.ok) {
-        return res.json();
-      } else {
-        return Promise.reject(`Ошибка: ${res.status}`);
-      }
-    })
-    .catch ((error) => {
-      console.log(error); // выведем ошибку в консоль
-    })
+    .then ((res) => this._getResponseData(res))
     }
 
     // РАБОТАЕТ
@@ -116,16 +78,7 @@ export default class Api {
       headers: this._headers,
       method: "DELETE",
     })
-      .then ((res) => {
-        if (res.ok) {
-          return res.json();
-        } else {
-          return Promise.reject(`Ошибка: ${res.status}`);
-        }
-      })
-      .catch ((error) => {
-        console.log(error); // выведем ошибку в консоль
-      })
+    .then ((res) => this._getResponseData(res))
   }
 
 // РАБОТАЕТ
@@ -134,13 +87,7 @@ export default class Api {
       headers: this._headers,
       method: "PUT",
     })
-      .then ((res) => {
-        if (res.ok) {
-          return res.json();
-        } else {
-          return Promise.reject(`Ошибка: ${res.status}`);
-        }
-      })
+    .then ((res) => this._getResponseData(res))
   }
     
 
@@ -150,15 +97,6 @@ export default class Api {
       headers: this._headers,
       method: "delete",
     })
-      .then ((res) => {
-        if (res.ok) {
-          return res.json();
-        } else {
-          return Promise.reject(`Ошибка: ${res.status}`);
-        }
-      })
-      .catch ((error) => {
-        console.log(error); // выведем ошибку в консоль
-      })
-  }
+    .then ((res) => this._getResponseData(res))
+}
 }

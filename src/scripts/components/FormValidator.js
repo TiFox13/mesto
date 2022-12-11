@@ -7,13 +7,14 @@ export default class FormValidator {
   this._inputErrorClass = validationConfig.inputErrorClass;
   this._errorClass = validationConfig.errorClass;
 
-  this._formSelector = form;
-  this._inputList = Array.from(this._formSelector.querySelectorAll(this._inputSelector));
-  this._saveButton = this._formSelector.querySelector(this._submitButtonSelector);
+  this._form = form;
+  this._inputList = Array.from(this._form.querySelectorAll(this._inputSelector));
+  this._saveButton = this._form.querySelector(this._submitButtonSelector);
   }
 
   enableValidation() {
     this._setEventListeners();
+ 
   }
 
   resetValidation() {
@@ -34,7 +35,7 @@ export default class FormValidator {
   }
 
   _hideItemError(inputElement) {
-    const errorElement = this._formSelector.querySelector(`.${inputElement.id}-error`);
+    const errorElement = this._form.querySelector(`.${inputElement.id}-error`);
       inputElement.classList.remove(this._inputErrorClass);
       errorElement.classList.remove(this._errorClass);
       //очищаем поле ошибки
@@ -42,7 +43,7 @@ export default class FormValidator {
   }
 
   _showItemError = (inputElement, errorMessage) => {
-    const errorElement = this._formSelector.querySelector(`.${inputElement.id}-error`);
+    const errorElement = this._form.querySelector(`.${inputElement.id}-error`);
     inputElement.classList.add(this._inputErrorClass);
     //изменяяем текст ошибки
     errorElement.textContent = errorMessage;

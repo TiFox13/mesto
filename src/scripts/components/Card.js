@@ -1,5 +1,5 @@
 export default class Card {
-  constructor(item, templateSelector, handleCardClick, confirmation, addLike, deleteLike, userId) {
+  constructor(item, templateSelector, handleCardClick, confirmation, addLike, deleteLike, userId, compareId) {
     this._name = item.name;
     this._link = item.link;
     this._likes = item.likes;
@@ -12,6 +12,7 @@ export default class Card {
     this._confirmation = confirmation;
     this._addLike = addLike;
     this._deleteLike = deleteLike;
+    this.compareId = compareId;
   }
 
   //этот метод делает пустой блок с болванки
@@ -25,7 +26,7 @@ export default class Card {
   }
 
   // этот метод отрисовывает блок и убирает в него данные
-  render(user, {compareId}) {
+  render() {
     this._view = this._getTemplate();
     this._image = this._view.querySelector('.element__photo')
     this._view.querySelector('.element__text').textContent = this._name;
@@ -38,7 +39,8 @@ export default class Card {
     this._likesCounter = this._view.querySelector('.like-counter');
     this._likesCounter.textContent = this._likes.length;
 
-    if (this._likes.some(compareId) === true) {
+    //пользователь уже лайкал эту карточку?
+    if (this._likes.some(this.compareId) === true) {
     this._likeButton.classList.add('like_active')
     }
 
@@ -56,23 +58,33 @@ export default class Card {
 
   //вешает слушатели на карточки
   _setEventListeners() {
-
-    this._view.querySelector('.like').addEventListener('click', (evt) =>{
-     if (evt.target.classList.contains('like_active')) {
-       evt.target.classList.remove('like_active');
-    this._deleteLike(this._id)
-    this._likes.length  = this._likes.length -1;
-    this._likesCounter.textContent = this._likes.length; 
-     } else {
-      evt.target.classList.add('like_active');
-      this._addLike(this._id)
-      this._likes.length  = this._likes.length +1 ;
-      this._likesCounter.textContent = this._likes.length;
-
-     }
-    
+    this._likeButton.addEventListener('click', () =>{
+      if (this._likeButton.classList.contains('like_active')) {
+        this._deleteLike(this._id)
+      } else {
+        this._addLike(this._id)
+      }
     });
     this._trashButton.addEventListener('click',  () => this._confirmation(this._id, this._view));
   }
 
+  //лайк поставили
+  onLike() {
+    this._likeButton.classList.add('like_active');
+      this._likes.length  = this._likes.length +1 ;
+      this._likesCounter.textContent = this._likes.length;
+  }
+
+  //лайк сняли
+  offLike() {
+    this._likeButton.classList.remove('like_active');
+      this._likes.length  = this._likes.length -1;
+      this._likesCounter.textContent = this._likes.length; 
+  }
+
+  //удаление карточки
+  trash() { 
+    this._view.remove()
+    this._element = null; 
+  } 
 }

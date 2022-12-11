@@ -1,10 +1,3 @@
-//осталось сделать
-//\\ удаление думм элемента карточки, когда она удаляется api запросом ( а она удаляется, да!)
-//\\ поработать с отправкой инфы о лайках и отображении этих изменений в думм
-//\\ начать НОРМАЛЬНО передавать id пользователя ( а не вручную, как я)
-// добавить режимы ожидания на кнопки попапов
-// отрефакторить код, а то я уже ничего в нем не понимаю!
-
 import { images } from './utils/constants.js';
 import '../pages/index.css';
 
@@ -31,7 +24,6 @@ import PopupWithSubmit from './components/PopupWithSubmit.js';
 
 import Api from './components/Api.js';
 
-
 let userId;
 //Создадим экземпляры классов
 const profileFormValid = new FormValidator(validationConfig, profileEditForm);
@@ -47,8 +39,7 @@ const formNewPlacePopup = new PopupWithForm('.popup_new-place', createNewPlace);
 const formEditProfilePopup = new PopupWithForm('.popup_edit-profile', submitHandlerEditProfileForm);
 
 const formNewAvatarPopup = new PopupWithForm('.popup_new-avatar',  submitHandlerEditAvatarForm);
-const preDeletePopup = new PopupWithSubmit ('.popup_pre-delete', submitHandlerPreDelete);
-
+const preDeletePopup = new PopupWithSubmit ('.popup_pre-delete');
 
 const apiConfig = {
 url: "https://mesto.nomoreparties.co/v1/cohort-54",
@@ -58,25 +49,22 @@ url: "https://mesto.nomoreparties.co/v1/cohort-54",
   }
 };
 
-
 //подключаем API
 const api = new Api(apiConfig);
 
-api.getUserInfo()
-.then ((result) => {
-  user.setUserInfo(result);
-  userId = result._id;
-})
+Promise.all([
+  api.getUserInfo(),
+  api.getInitialCards(),
+])
+.then(([info, allCards]) => {
+  user.setUserInfo(info);
+  userId = info._id;
 
-api.getInitialCards()
-.then((result) => {
-  const resultReverse = result.reverse()
-  api.getUserInfo()
-    .then ((user) => {
-      resultReverse.forEach((item) => {
-        section.startRender(item, user)
-      })
-    })
+  const allCardsReverse = allCards.reverse()
+    section.startRender(allCardsReverse)
+})
+.catch ((error) => {
+  console.log(error); // выведем ошибку в консоль
 })
 
 imagePopup.setEventListeners();
@@ -86,114 +74,120 @@ formNewAvatarPopup.setEventListeners();
 preDeletePopup.setEventListeners();
 
 //запустили валидацию
-profileFormValid.enableValidation(profileEditForm);
-newPlaceValid.enableValidation(newPlaceCreateForm);
-newAvatarValid.enableValidation(newAvatarForm);
-
-
-
+profileFormValid.enableValidation();
+newPlaceValid.enableValidation();
+newAvatarValid.enableValidation();
 
 //функция, которая делает карточки, создавая объект класса Card
-function createCard(item, user) {
-  const card = new Card(item, '#template-card',  handleCardClick, confirmation, addLike, deleteLike, userId);
-  const cardElement = card.render(user, {compareId: (element)=> {  
-    return element._id === user._id
- }});
-  
+function createCard(item) {
+  const card = new Card(
+    item,                                             //item (объект для карточки)
+    '#template-card',                                //templateSelector
+    (link, name) => {imagePopup.open(link, name);},  //handleCardClick 
+    (id)=> {                                        //confirmation
+      preDeletePopup.open();
+      preDeletePopup.changeSubmitHandler(() => {  //submitHandlerPreDelete
+        api.deleteCard(id)
+        .then((res) => {
+          card.trash()
+          preDeletePopup.close()
+        }) 
+        .catch ((error) => {
+          console.log(error); // выведем ошибку в консоль
+        })
+        
+      })}, 
+    (id) => { //addLike,
+      api.putLike(id)                           
+      .then((res) => {
+        card.onLike();
+      })
+      .catch ((error) => {
+        console.log(error); // выведем ошибку в консоль
+      })
+    },                    
+    (id) => { //deleteLike, 
+      api.deleteLike(id)
+      .then((res) => {
+        card.offLike();
+      })
+      .catch ((error) => {
+        console.log(error); // выведем ошибку в консоль
+      })},                 
+    userId,
+    (element) => element._id === userId,   //compareId
+);
+  const cardElement = card.render();
+
   return cardElement;
 }
 
-
-//должна вызывать попап при клике на карточку ( передается в Card)
-function handleCardClick(link, name) {
-    imagePopup.open(link, name);
-}
-
-function confirmation(id, card) {
-  preDeletePopup.open(id, card);
-}
-
-function submitHandlerPreDelete(id, card) {   // закрыть попап и вызвать API метод удаления карточки.   
-  api.deleteCard(id);
-deleteCard(card)
-preDeletePopup.close()
-}
-
-// ФУНКЦИЯ УДАЛЕНИЯ КАРТОЧКИ ИЗ ДУММ  
-function deleteCard(card) {
-  card.remove();
-}
- 
-//Как поставить этой фотке лайк?  API
-function addLike(id) {
-  api.putLike(id);
-}
-// А как удалить?  API
-function deleteLike(id) {
-api.deleteLike(id);
-}
-
-
-
 // функция сохранения изменений АВАТАРА    API
-function submitHandlerEditAvatarForm(item, button) {
-  renderLoading(true, button);
+function submitHandlerEditAvatarForm(item) {
+ formNewAvatarPopup.renderLoading(true);
   api.patchAvatar(item)
   .then((result) => {
-    avatarImage.src = result.avatar;
+    user.setUserInfo(result);
+    const newInfo = user.getUserInfo();
+    avatarImage.src = newInfo.userAvatar;
   })
   .then (() => {
     formNewAvatarPopup.close()
   })
+  .catch ((error) => {
+    console.log(error); // выведем ошибку в консоль
+  })
   .finally (() => {
-    renderLoading(false, button);
+    formNewAvatarPopup.renderLoading(false);
   })
 }
 
-
 // функция сохранения изменений в форме    API
-function submitHandlerEditProfileForm (item, button) {
- renderLoading(true, button);
-api.patchUserInfo(item)
-.then((result) => {
-  user.setUserInfo(result);
-  nameInput.value = result.name;
-   jobInput.value = result.about;
- })
- .then (() => {
- formEditProfilePopup.close(); // вызвали функцию закрытия формы
- })
-.finally (() => {
-  renderLoading(false, button);
-})
-  
-  
+function submitHandlerEditProfileForm (item) {
+  formEditProfilePopup.renderLoading(true);
+  api.patchUserInfo(item)
+  .then((result) => {
+    user.setUserInfo(result);
+    const newInfo = user.getUserInfo();
+    nameInput.value = newInfo.userName;
+    jobInput.value = newInfo.userAbout;
+  })
+  .then (() => {
+    formEditProfilePopup.close(); // вызвали функцию закрытия формы
+  })
+  .catch ((error) => {
+    console.log(error); // выведем ошибку в консоль
+  })
+  .finally (() => {
+    formEditProfilePopup.renderLoading(false);
+  }) 
 }
 
 // отправка формы для создания новой карточки   API
-function createNewPlace (item, button) {  
-  renderLoading(true, button);
-api.addNewCard(item)
-.then((result) => {
- section.startRender(result)
-})
-.then (() => {
-  formNewPlacePopup.close();// вызвали функцию закрытия этой формы
-})
-.finally (() => {
-  renderLoading(false, button);
-})
-  
+function createNewPlace (item) {  
+ formNewPlacePopup.renderLoading(true);
+  api.addNewCard(item)
+  .then((result) => {
+    const card = createCard(result); 
+    section.addItem(card); 
+  })
+  .then (() => {
+    formNewPlacePopup.close();// вызвали функцию закрытия этой формы
+  })
+  .catch ((error) => {
+    console.log(error); // выведем ошибку в консоль
+  })
+  .finally (() => {
+    formNewPlacePopup.renderLoading(false);
+  })
 }
 
 // Открытие первого окна(редактирование профиля)
 buttonEdit.addEventListener('click', ()=> {
-  api.getUserInfo()
-    .then ((result) => {
-      nameInput.value = result.name;
-      jobInput.value = result.about;
-    })
-
+  const userInfo = user.getUserInfo() 
+  nameInput.value = userInfo.userName; 
+  jobInput.value = userInfo.userAbout; 
+ 
   formEditProfilePopup.open();
   profileFormValid.resetValidation();//спрятали ошибки
 });
@@ -209,14 +203,3 @@ avatarEditbutton.addEventListener('click', () =>{
 formNewAvatarPopup.open();
 newAvatarValid.resetValidation()
 })
-
-//рекламная пауза, так сказать   
-function renderLoading(isLoading, button) {
-  if (isLoading) {
-   button.classList.add('button-loading_in-loading');
-  } else {
-    button.classList.remove('button-loading_in-loading');
-  }
-
-
-}

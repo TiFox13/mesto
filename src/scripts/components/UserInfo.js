@@ -10,6 +10,7 @@ export default class UserInfo {
         const profileInfo = {
             userName : this._userName.textContent,
             userAbout : this._userAbout.textContent,
+            userAvatar : this._avatarImage.src,
             myId : this._myId,
         };
         return (profileInfo);

@@ -15,6 +15,7 @@
 @import url(../blocks/profile/__text/profile__text.css);
 @import url(../blocks/add-button/add-button.css);
 @import url(../blocks/edit-button/edit-button.css);
+@import url(../blocks/avatar-button/avatar-button.css);
 
 @import url(../blocks/elements/elements.css);
 
@@ -37,8 +38,6 @@
 @import url(../blocks/form/__heading/form__heading.css);
 
 @import url(../blocks/save-button/save-button.css);
-@import url(../blocks/button-loading/button-loading.css);
-@import url(../blocks/button-loading/_in-loading/save-button_loading_in-loading.css);
 
 @import url(../blocks/save-button/_inactive/save-button_inactive.css);
 @import url(../blocks/close-button/close-button.css);
