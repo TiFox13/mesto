@@ -128,8 +128,8 @@ function submitHandlerEditAvatarForm(item) {
   api.patchAvatar(item)
   .then((result) => {
     user.setUserInfo(result);
-    const newInfo = user.getUserInfo();
-    avatarImage.src = newInfo.userAvatar;
+   // const newInfo = user.getUserInfo();
+   // avatarImage.src = newInfo.userAvatar;
   })
   .then (() => {
     formNewAvatarPopup.close()
@@ -148,9 +148,9 @@ function submitHandlerEditProfileForm (item) {
   api.patchUserInfo(item)
   .then((result) => {
     user.setUserInfo(result);
-    const newInfo = user.getUserInfo();
-    nameInput.value = newInfo.userName;
-    jobInput.value = newInfo.userAbout;
+   // const newInfo = user.getUserInfo();
+   // nameInput.value = newInfo.userName;
+   // jobInput.value = newInfo.userAbout;
   })
   .then (() => {
     formEditProfilePopup.close(); // вызвали функцию закрытия формы
